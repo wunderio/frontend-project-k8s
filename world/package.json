@@ -1,8 +1,13 @@
 {
-  "name": "frontend_app",
+  "name": "world_app",
   "version": "1.0.0",
-  "description": "Sample frontend app",
+  "description": "Sample world app",
   "author": "Janis Bebritis <janis.bebritis@wunder.io>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wunderio/frontend-project-k8s.git"
+  },
   "main": "server.js",
   "scripts": {
     "server": "node server.js"

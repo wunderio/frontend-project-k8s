@@ -1,6 +1,6 @@
 FROM node:12.8-alpine
 
-COPY . /app
+COPY ./hello /app
 WORKDIR /app
 
 CMD npm run start

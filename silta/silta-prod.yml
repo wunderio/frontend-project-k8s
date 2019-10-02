@@ -1,2 +1,4 @@
-autoscaling:
-  enabled: true
+services:
+  world:
+    autoscaling:
+      enabled: true

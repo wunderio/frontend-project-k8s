@@ -4,20 +4,18 @@
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
 # for all possible options.
 
-nginx:
-  basicauth:
-    enabled: true
-
-frontend:
-  env:
-    FOO: 'BAR'
-
 services: 
-  webhook:
-    image: 'this will be overriden in the build process'
+  hello:
+    exposedRoute: '/hello'
+    port: 4000
     env:
       FOO: 'BAR'
-  
+
+  world:
+    exposedRoute: '/world'
+    port: 5000
+    replicas: 2
+
   redis:
     image: redis
-
+    port: 6379
