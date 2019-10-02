@@ -1,0 +1,50 @@
+version: 2.1
+
+orbs:
+  silta: silta/silta@dev:frontend
+
+# jobs:
+#   npm-install:
+#     docker:
+#       - image: circleci/node:10.16.3-browsers
+#         environment:
+#           - discovery.type=single-node
+#           - http.host=0.0.0.0
+#           - transport.host=127.0.0.1
+#           - xpack.security.enabled=false
+#           - cluster.name=docker-cluster
+#           - bootstrap.memory_lock=true
+#     steps:
+#       - checkout
+#       - run:
+#           name: Install Dependencies
+#           command: cd ./hello/ && npm install
+#       - run:
+#           name: Install Dependencies
+#           command: cd ./world/ && npm install
+
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - silta/frontend-build-deploy: &build-deploy
+          name: Silta build & deploy
+          # Use a local chart during development.
+          #chart_name: "./chart"
+          #chart_repository: ""
+          codebase-build:
+            - silta/npm-install-build:
+                build-command: "npm install"
+          context: global_nonprod
+          filters:
+            branches:
+              ignore: production
+      # - silta/frontend-build-deploy:
+      #     # Extend the build-deploy configuration for the production environment.
+      #     <<: *build-deploy
+      #     name: Silta build & deploy production
+      #     context: silta_finland
+      #     silta_config: silta/silta.yml,silta/silta-prod.yml
+      #     filters:
+      #       branches:
+      #         only: production

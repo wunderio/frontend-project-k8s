@@ -1,0 +1,23 @@
+
+# Values in this file override the default values of our helm chart.
+#
+# See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
+# for all possible options.
+
+nginx:
+  basicauth:
+    enabled: true
+
+frontend:
+  env:
+    FOO: 'BAR'
+
+services: 
+  webhook:
+    image: 'this will be overriden in the build process'
+    env:
+      FOO: 'BAR'
+  
+  redis:
+    image: redis
+

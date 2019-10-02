@@ -1,0 +1,13 @@
+{
+  "name": "frontend_app",
+  "version": "1.0.0",
+  "description": "Sample frontend app",
+  "author": "Janis Bebritis <janis.bebritis@wunder.io>",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
