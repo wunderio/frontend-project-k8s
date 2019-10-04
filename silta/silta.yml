@@ -4,18 +4,24 @@
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
 # for all possible options.
 
-services: 
-  hello:
-    exposedRoute: '/hello'
-    port: 4000
-    env:
-      FOO: 'BAR'
+frontend: 
+  port: 4000
+  env:
+    FOO: 'BAR'
+    PORT: '4000'
 
-  world:
-    exposedRoute: '/world'
-    port: 5000
-    replicas: 2
+# services: 
+#   hello:
+#     exposedRoute: '/hello'
+#     port: 4000
+#     env:
+#       FOO: 'BAR'
 
-  redis:
-    image: redis
-    port: 6379
+#   world:
+#     exposedRoute: '/world'
+#     port: 5000
+#     replicas: 2
+
+#   redis:
+#     image: redis
+#     port: 6379
