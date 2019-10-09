@@ -4,12 +4,6 @@
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
 # for all possible options.
 
-# frontend: 
-#   port: 4000
-#   env:
-#     FOO: 'BAR'
-#     PORT: '4000'
-
 services: 
   hello:
     exposedRoute: '/hello'
