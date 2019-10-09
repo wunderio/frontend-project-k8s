@@ -15,23 +15,23 @@ workflows:
           chart_repository: ''
           
           codebase-build:
+            # - silta/npm-install-build:
+            #     build-command: ''
             - silta/npm-install-build:
+                path: './hello'
                 build-command: ''
-          #   - silta/npm-install-build:
-          #       path: './hello'
-          #       build-command: ''
-          #   - silta/npm-install-build:
-          #       path: './world'
-          #       build-command: ''
-          # image_build_steps:
-          #   - silta/build-docker-image:
-          #       dockerfile: 'silta/hello.Dockerfile'
-          #       path: '.'
-          #       identifier: 'hello'
-          #   - silta/build-docker-image:
-          #       dockerfile: 'silta/world.Dockerfile'
-          #       path: '.'
-          #       identifier: 'world'
+            - silta/npm-install-build:
+                path: './world'
+                build-command: ''
+          image_build_steps:
+            - silta/build-docker-image:
+                dockerfile: 'silta/hello.Dockerfile'
+                path: '.'
+                identifier: 'hello'
+            - silta/build-docker-image:
+                dockerfile: 'silta/world.Dockerfile'
+                path: '.'
+                identifier: 'world'
           context: 'global_nonprod'
           filters:
             branches:
