@@ -15,7 +15,3 @@ services:
     exposedRoute: '/world'
     port: 5000
     replicas: 2
-
-#   redis:
-#     image: redis
-#     port: 6379
