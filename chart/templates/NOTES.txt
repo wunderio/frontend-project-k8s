@@ -5,18 +5,19 @@ Deployed {{ .Release.Name }} successfully, your site is available here:
   {{- range $index, $domain := .Values.exposeDomains }}
   {{ $domain.hostname }}
   {{- end }}
-  {{- end }}
+  {{- else -}}
 
   {{- range $index, $service := .Values.services }}
-  {{- if $service.exposedRoute }}
-  http://{{- template "frontend.domain" $ }}{{ $service.exposedRoute }}
+  {{- if default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
+  http://{{- template "frontend.domain" $ }}{{ default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
   {{- end }}
   {{- end }}
 
   {{- range $index, $domain := .Values.exposeDomains }}
   {{- range $index, $service := $.Values.services }}
-  {{- if $service.exposedRoute }}
-  http://{{ $domain.hostname }}{{ $service.exposedRoute }}
+  {{- if default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
+  http://{{ $domain.hostname }}{{ default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
+  {{- end }}
   {{- end }}
   {{- end }}
   {{- end }}

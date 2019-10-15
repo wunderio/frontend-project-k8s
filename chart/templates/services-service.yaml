@@ -1,3 +1,4 @@
+{{ if not .Values.frontend }}
 {{- range $index, $service := .Values.services }}
 apiVersion: v1
 kind: Service
@@ -9,9 +10,10 @@ spec:
   type: NodePort
   externalTrafficPolicy: Local
   ports:
-    - port: {{ default 3000 $service.port }}
+    - port: {{ default $.Values.serviceDefaults.port $service.port }}
   selector:
     {{ include "frontend.release_labels" $ | indent 4 }}
     deployment: frontend-{{ $index }}
 ---
+{{- end }}
 {{- end }}
