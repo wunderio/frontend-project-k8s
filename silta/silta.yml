@@ -4,6 +4,17 @@
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
 # for all possible options.
 
+nginx:
+  extra_conditions: |
+    # Response to OPTIONS requests
+    add_header 'Access-Control-Allow-Methods' 'GET,OPTIONS,PUT,DELETE,POST' always;
+    add_header 'Access-Control-Allow-Credentials' 'true' always;
+    add_header 'Access-Control-Allow-Origin' '$http_origin' always;
+    add_header 'Access-Control-Allow-Headers' 'Authorization,DNT,User-Agent,Keep-Alive,Content-Type,accept,origin,X-Requested-With,Access-Control-Allow-Origin' always;
+    if ($request_method = OPTIONS ) {
+      return 204;
+    }
+
 services: 
   hello:
     exposedRoute: '/hello'
