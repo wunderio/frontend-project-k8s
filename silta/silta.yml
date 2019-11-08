@@ -15,3 +15,9 @@ services:
     exposedRoute: '/world'
     port: 5000
     replicas: 2
+
+cron:
+  hello-cli:
+    service: hello
+    command: echo "Hello, again"
+    schedule: "~ * * * *"
