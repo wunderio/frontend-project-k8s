@@ -23,7 +23,7 @@ tests:
 
   - it: sets the replica count correctly
     set:
-      replicas: 3
+      nginx.replicas: 3
     asserts:
       - equal:
           path: spec.replicas

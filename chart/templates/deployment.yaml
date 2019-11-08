@@ -5,7 +5,7 @@ metadata:
   labels:
     {{ include "frontend.release_labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.nginx.replicas }}
   selector:
     matchLabels:
       {{ include "frontend.release_labels" . | indent 6 }}
@@ -65,11 +65,11 @@ spec:
                 path: .htaccess
         {{- end }}
 ---
-{{- if .Values.autoscaling.enabled }}
+{{- if .Values.nginx.autoscaling.enabled }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ .Release.Name }}-frontend
+  name: {{ .Release.Name }}-nginx
   labels:
     {{- include "frontend.release_labels" . | nindent 4 }}
 spec:
@@ -77,8 +77,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ .Release.Name }}-deployment
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.nginx.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.nginx.autoscaling.maxReplicas }}
   metrics:
-    {{- toYaml .Values.autoscaling.metrics | nindent 4 }}
+    {{- toYaml .Values.nginx.autoscaling.metrics | nindent 4 }}
 {{- end }}
