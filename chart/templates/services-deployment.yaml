@@ -61,7 +61,7 @@ spec:
         {{- range $index, $mountName := $service.mounts -}}
         {{ $mount := (index $.Values.mounts $mountName) }}
         {{- if eq $mount.enabled true }}
-        - name: drupal-{{ $index }}
+        - name: frontend-{{ $index }}
           persistentVolumeClaim:
             claimName: {{ $.Release.Name }}-{{ $index }}
         {{- end }}
