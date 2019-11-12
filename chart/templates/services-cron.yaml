@@ -36,9 +36,9 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
-            {{- if .Values.elasticsearch.enabled }}
+            {{- if $.Values.elasticsearch.enabled }}
             - name: ELASTICSEARCH_HOST
-              value: {{ .Release.Name }}-es
+              value: {{ $.Release.Name }}-es
             {{- end }}
             command: ["/bin/sh", "-c"]
             args:
