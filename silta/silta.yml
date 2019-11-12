@@ -20,7 +20,7 @@ services:
 
 cron:
   hello-cli:
-    service: hello
+    service: world
     command: echo $(date) > /app/files/lastupdate.txt
     schedule: "~ * * * *"
 
