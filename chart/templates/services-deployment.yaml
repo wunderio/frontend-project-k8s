@@ -28,7 +28,7 @@ spec:
           {{- range $index, $mountName := $service.mounts -}}
           {{ $mount := (index $.Values.mounts $mountName) }}
           {{- if eq $mount.enabled true }}
-          - name: frontend-{{ $index }}
+          - name: frontend-{{ $mountName }}
             mountPath: {{ $mount.mountPath }}
           {{- end }}
           {{- end }}
@@ -61,9 +61,9 @@ spec:
         {{- range $index, $mountName := $service.mounts -}}
         {{ $mount := (index $.Values.mounts $mountName) }}
         {{- if eq $mount.enabled true }}
-        - name: frontend-{{ $index }}
+        - name: frontend-{{ $mountName }}
           persistentVolumeClaim:
-            claimName: {{ $.Release.Name }}-{{ $index }}
+            claimName: {{ $.Release.Name }}-{{ $mountName }}
         {{- end }}
         {{- end }}
         {{- end }}
