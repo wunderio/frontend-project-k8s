@@ -5,14 +5,15 @@
   "author": "Janis Bebritis <janis.bebritis@wunder.io>",
   "license": "UNLICENSED",
   "repository": {
-    "type" : "git",
-    "url" : "git@github.com:wunderio/frontend-project-k8s.git"
+    "type": "git",
+    "url": "git@github.com:wunderio/frontend-project-k8s.git"
   },
   "main": "server.js",
   "scripts": {
     "server": "node server.js"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.4.0",
     "express": "^4.17.1"
   }
 }
