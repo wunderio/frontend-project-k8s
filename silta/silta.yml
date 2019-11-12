@@ -21,7 +21,7 @@ services:
 cron:
   hello-cli:
     service: hello
-    command: echo "Hello, again"
+    command: echo $(date) > /app/files/lastupdate.txt
     schedule: "~ * * * *"
 
 mounts:
