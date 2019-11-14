@@ -33,6 +33,15 @@ workflows:
                 dockerfile: 'silta/world.Dockerfile'
                 path: '.'
                 identifier: 'world'
+            - run:
+                name: Add elastic repo for elasticsearch
+                command: helm repo add elastic https://helm.elastic.co
+            - run:
+                name: Build local helm dependencies
+                command: helm dependency build ./chart
+            - run:
+                name: Dry-run helm install
+                command: helm install --dry-run ./chart
           context: 'global_nonprod'
           filters:
             branches:
