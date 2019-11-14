@@ -15,9 +15,19 @@ services:
     exposedRoute: '/world'
     port: 5000
     replicas: 2
+    mounts:
+      - files
 
 cron:
   hello-cli:
-    service: hello
-    command: echo "Hello, again"
+    service: world
+    command: echo $(date) > /app/files/lastupdate.txt
     schedule: "~ * * * *"
+
+mounts:
+  files:
+    enabled: true
+    storage: 1G
+    mountPath: /app/files
+    storageClassName: silta-shared
+    csiDriverName: csi-rclone
