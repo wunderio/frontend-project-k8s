@@ -9,6 +9,7 @@ app.get('/hello', (req, res) => res.send('Hello'));
 
 app.get('/hello/elasticsearch-status', async (req, res) => {
   const health = await client.cluster.health();
+  console.log(health);
   res.send(health.status);
 });
 
