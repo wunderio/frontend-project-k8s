@@ -55,9 +55,9 @@ spec:
           value: {{ $.Release.Name }}-es
         {{- end }}
         - name: GITAUTH_API_TOKEN
-          value: "{{ .Values.shell.gitAuth.apiToken }}"
+          value: "{{ $.Values.shell.gitAuth.apiToken }}"
         - name: GITAUTH_REPOSITORY_URL
-          value: "{{ .Values.shell.gitAuth.repositoryUrl }}"
+          value: "{{ $.Values.shell.gitAuth.repositoryUrl }}"
         resources:
           {{ if $service.resources -}}
           {{ merge $service.resources $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
