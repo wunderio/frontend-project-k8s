@@ -1,3 +1,3 @@
-FROM wunderio/silta-node
+FROM wunderio/silta-node:latest
 
 COPY ./hello /app
