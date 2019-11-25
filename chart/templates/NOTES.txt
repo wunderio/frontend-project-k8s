@@ -5,7 +5,7 @@ Deployed {{ .Release.Name }} successfully, your site is available here:
   {{- if default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
   http://{{- template "frontend.domain" $ }}{{ default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
 
-  {{- range $index, $domain := .Values.exposeDomains }}
+  {{- range $index, $domain := $.Values.exposeDomains }}
   http://{{ $domain.hostname }}{{ default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
   {{- end }}
   {{- end }}
