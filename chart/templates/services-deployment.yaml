@@ -33,6 +33,10 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
+          {{ if $.Values.shell.enabled -}}
+          - name: shell-keys
+            mountPath: /etc/ssh/keys
+          {{- end }}
         livenessProbe:
           tcpSocket:
             port: {{ default $.Values.serviceDefaults.port $service.port }}
@@ -77,6 +81,11 @@ spec:
         {{- end }}
         {{- end }}
         {{- end }}
+        {{ if $.Values.shell.enabled -}}
+        - name: shell-keys
+          persistentVolumeClaim:
+            claimName: {{ $.Release.Name }}-shell-keys
+        {{- end }}
 
 {{- if $service.autoscaling }}
 {{- if $service.autoscaling.enabled }}
@@ -99,4 +108,18 @@ spec:
 {{- end }}
 {{- end }}
 ---
+{{- if $.Values.shell.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $.Release.Name }}-shell-keys
+  labels:
+    {{ include "frontend.release_labels" $ | indent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50M
+{{- end }}
 {{- end }}
