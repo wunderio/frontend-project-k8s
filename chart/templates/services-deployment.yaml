@@ -84,7 +84,7 @@ spec:
         {{ if $.Values.shell.enabled -}}
         - name: shell-keys
           persistentVolumeClaim:
-            claimName: {{ $.Release.Name }}-shell-keys
+            claimName: {{ $.Release.Name }}-shell-keys-{{ $index }}
         {{- end }}
 
 {{- if $service.autoscaling }}
@@ -112,7 +112,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ $.Release.Name }}-shell-keys
+  name: {{ $.Release.Name }}-shell-keys-{{ $index }}
   labels:
     {{ include "frontend.release_labels" $ | indent 4 }}
 spec:
