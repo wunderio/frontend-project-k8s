@@ -54,10 +54,12 @@ spec:
         - name: ELASTICSEARCH_HOST
           value: {{ $.Release.Name }}-es
         {{- end }}
+        {{ if $.Values.shell.enabled -}}
         - name: GITAUTH_API_TOKEN
           value: "{{ $.Values.shell.gitAuth.apiToken }}"
         - name: GITAUTH_REPOSITORY_URL
           value: "{{ $.Values.shell.gitAuth.repositoryUrl }}"
+        {{- end }}
         resources:
           {{ if $service.resources -}}
           {{ merge $service.resources $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
