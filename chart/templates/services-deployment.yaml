@@ -108,19 +108,4 @@ spec:
 {{- end }}
 {{- end }}
 ---
-{{- if $.Values.shell.enabled }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ $.Release.Name }}-shell-keys-{{ $index }}
-  labels:
-    {{ include "frontend.release_labels" $ | indent 4 }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50M
----
-{{- end }}
 {{- end }}

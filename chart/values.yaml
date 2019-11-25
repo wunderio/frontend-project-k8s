@@ -152,6 +152,9 @@ shell:
   gitAuth:
     apiToken: ''
     repositoryURL: ''
+  mount:
+    storageClassName: silta-shared
+    csiDriverName: csi-rclone
 
 # Provide defaults for all services.
 # Note that only keys used here can be overridden.

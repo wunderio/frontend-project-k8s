@@ -44,3 +44,41 @@ spec:
 ---
 {{- end -}}
 {{- end }}
+
+{{- if $.Values.shell.enabled }}
+{{- if eq $.Values.shell.mount.storageClassName "silta-shared" }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ $.Release.Name }}-shell-keys
+  labels:
+    name: {{ $.Release.Name }}-shell-keys
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 50M
+  storageClassName: "silta-shared"
+  {{- if $.Values.shell.mount.csiDriverName }}
+  csi:
+    driver: {{ $.Values.shell.mount.csiDriverName }}
+    volumeHandle: {{ $.Release.Name }}-shell-keys
+    volumeAttributes:
+      remotePathSuffix: /{{ $.Release.Namespace }}/{{ $.Values.environmentName }}/shell-keys
+  {{- end }}
+{{- end }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $.Release.Name }}-shell-keys
+  labels:
+    {{ include "frontend.release_labels" $ | indent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50M
+---
+{{- end }}
