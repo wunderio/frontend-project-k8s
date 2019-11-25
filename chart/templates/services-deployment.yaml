@@ -84,7 +84,7 @@ spec:
         {{ if $.Values.shell.enabled -}}
         - name: shell-keys
           persistentVolumeClaim:
-            claimName: {{ $.Release.Name }}-shell-keys-{{ $index }}
+            claimName: {{ $.Release.Name }}-shell-keys
         {{- end }}
 
 {{- if $service.autoscaling }}
