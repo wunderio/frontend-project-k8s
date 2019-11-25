@@ -121,5 +121,6 @@ spec:
   resources:
     requests:
       storage: 50M
+---
 {{- end }}
 {{- end }}
