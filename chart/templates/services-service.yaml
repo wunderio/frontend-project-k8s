@@ -18,7 +18,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $.Release.Name }}-{{ $index }}-shell
+  name: {{ template "frontend.environment.hostname" $ }}-shell-{{ $index }}
   labels:
     {{ include "frontend.release_labels" $ | indent 4 }}
 spec:

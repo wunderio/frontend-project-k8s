@@ -9,6 +9,13 @@ Deployed {{ .Release.Name }} successfully, your site is available here:
   http://{{ $domain.hostname }}{{ default $.Values.serviceDefaults.exposedRoute $service.exposedRoute }}
   {{- end }}
   {{- end }}
+
+{{ if $.Values.shell.enabled }}
+  SSH connection (limited access through VPN):
+
+    ssh www-admin@{{ template "frontend.environment.hostname" $ }}-shell-{{ $index }}.{{ $.Release.Namespace }} -J {{ include "frontend.jumphost" $ }}
+
+{{- end }}
 {{- end }}
 
 {{ if .Values.nginx.basicauth.enabled -}}
