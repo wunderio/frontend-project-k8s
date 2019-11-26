@@ -34,3 +34,6 @@ mounts:
 
 elasticsearch:
   enabled: true
+
+shell:
+  enabled: true
