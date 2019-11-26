@@ -65,6 +65,7 @@ spec:
     volumeHandle: {{ $.Release.Name }}-shell-keys
     volumeAttributes:
       remotePathSuffix: /{{ $.Release.Namespace }}/{{ $.Values.environmentName }}/shell-keys
+      umask: "077"
   {{- end }}
 {{- end }}
 ---
