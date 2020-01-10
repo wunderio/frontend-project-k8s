@@ -11,18 +11,17 @@ services:
     env:
       FOO: 'BAR'
 
+    cron:
+      hello-cli:
+        command: echo $(date) > /app/files/lastupdate.txt
+        schedule: "~ * * * *"
+
   world:
     exposedRoute: '/world'
     port: 5000
     replicas: 2
     mounts:
       - files
-
-cron:
-  hello-cli:
-    service: world
-    command: echo $(date) > /app/files/lastupdate.txt
-    schedule: "~ * * * *"
 
 mounts:
   files:
