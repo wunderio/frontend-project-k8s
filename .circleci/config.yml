@@ -48,7 +48,7 @@ workflows:
                 command: helm dependency build ./chart
             - run:
                 name: Dry-run helm install
-                command: helm install --dry-run ./chart
+                command: helm install --dry-run --generate-name ./chart
           context: 'global_nonprod'
           filters:
             branches:
