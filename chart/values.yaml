@@ -95,8 +95,8 @@ nginx:
     #   return 204;
     # }
 
-services:
-  # frontend:
+services: {}
+  # node:
   #   image: 'you need to pass in a value for frontend.image to your helm chart'
   #   port: 3000
   #   env: {}
@@ -126,7 +126,6 @@ services:
   #       cpu: 200m
   #       memory: 128Mi
   #     limits:
-  #       cpu: 1000m
   #       memory: 512Mi
 
   #   cron:
@@ -134,8 +133,11 @@ services:
   #       command: echo "hello world"
   #       schedule: "~ 1 * * *"
 
+  #   nodeSelector:
+  #     cloud.google.com/gke-nodepool: static-ip
+
 # Configure the dynamically mounted volumes
-mounts:
+mounts: {}
 #  files:
 #    enabled: true
 #    storage: 1G
@@ -156,14 +158,12 @@ shell:
 # Provide defaults for all services.
 # Note that only keys used here can be overridden.
 serviceDefaults:
-  exposedRoute: '/'
   port: 3000
   resources:
     requests:
       cpu: 1m
-      memory: 128Mi
+      memory: 64Mi
     limits:
-      cpu: 1000m
       memory: 256Mi
 
 elasticsearch:
@@ -186,12 +186,12 @@ elasticsearch:
     resources:
       requests:
         storage: 1Gi
+
   resources:
     requests:
       cpu: 200m
       memory: 512Mi
     limits:
-      cpu: 1000m
       memory: 1Gi
 
   nodeAffinity:
