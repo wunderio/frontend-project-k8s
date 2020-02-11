@@ -34,5 +34,8 @@ mounts:
 elasticsearch:
   enabled: true
 
+rabbitmq:
+  enabled: true
+
 shell:
   enabled: true
