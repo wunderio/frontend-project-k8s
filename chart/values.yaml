@@ -206,3 +206,7 @@ elasticsearch:
 
 rabbitmq:
   enabled: false
+
+  # Use a low default to prevent unnecessary storage use.
+  persistence:
+    size: 1Gi
