@@ -36,6 +36,7 @@ elasticsearch:
 
 rabbitmq:
   enabled: true
+  password: this-is-not-safe
 
 shell:
   enabled: true
