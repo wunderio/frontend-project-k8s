@@ -34,5 +34,10 @@ mounts:
 elasticsearch:
   enabled: true
 
+rabbitmq:
+  enabled: true
+  rabbitmq:
+    password: this-is-not-safe
+
 shell:
   enabled: true
