@@ -132,6 +132,7 @@ services: {}
   #     example:
   #       command: echo "hello world"
   #       schedule: "~ 1 * * *"
+  #       parallelism: 1
 
   #   nodeSelector:
   #     cloud.google.com/gke-nodepool: static-ip
@@ -161,10 +162,19 @@ serviceDefaults:
   port: 3000
   resources:
     requests:
-      cpu: 1m
+      cpu: 2m
       memory: 64Mi
     limits:
       memory: 256Mi
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          targetAverageUtilization: 80
 
 elasticsearch:
   enabled: false
