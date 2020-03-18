@@ -3,7 +3,7 @@ dependencies:
   repository: https://helm.elastic.co
   version: 7.4.1
 - name: rabbitmq
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 6.17.2
-digest: sha256:925b9d03df154ab1f5cf96725c8609c01e501a2f4ece96828de10c172d6a822c
-generated: "2020-02-17T11:52:55.67941+01:00"
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 6.17.5
+digest: sha256:179f4e9ea8c5b9814afab0e62e4e6633862036ade249f0d5caad81ff2229ef90
+generated: "2020-03-18T13:29:18.229377586Z"
