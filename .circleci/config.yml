@@ -19,7 +19,7 @@ workflows:
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
-          chart_name: './chart'
+          chart_name: './charts/frontend'
           chart_repository: ''
           
           codebase-build:
@@ -45,10 +45,10 @@ workflows:
                 command: helm repo add elastic https://helm.elastic.co
             - run:
                 name: Build local helm dependencies
-                command: helm dependency build ./chart
+                command: helm dependency build ./charts/frontend
             - run:
                 name: Dry-run helm install
-                command: helm install --dry-run --generate-name ./chart
+                command: helm install --dry-run --generate-name ./charts/frontend
           context: 'global_nonprod'
           filters:
             branches:
