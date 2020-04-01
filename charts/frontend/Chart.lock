@@ -5,5 +5,8 @@ dependencies:
 - name: rabbitmq
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 6.17.5
-digest: sha256:fdd94f7363ade228769e6e5c345e5f6b16d9c21d6b9308fe2dcf063833600895
-generated: "2020-04-01T17:21:49.936481+02:00"
+- name: silta-release
+  repository: file://../silta-release
+  version: 0.1.0
+digest: sha256:60e1684ca5c835d886630177a7dbaa6cf77ae2fe9056bfe263d9067a6d529cc1
+generated: "2020-04-01T18:15:02.887231+02:00"
