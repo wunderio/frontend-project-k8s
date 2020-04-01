@@ -22,6 +22,8 @@ services:
         command: echo $(date) > /app/files/lastupdate.txt
         schedule: "~ * * * *"
 
+domainPrefixes: ['fi', 'lv' ]
+
 mounts:
   files:
     enabled: true
