@@ -1,16 +1,6 @@
 # Allow access to drupal or varnish pods from the ingress in the silta-cluster namespace
 {{- $id := "allow-ingress" -}}
-{{- $podSelectors := dict "deployment" "frontend" -}}
+{{- $podSelectors := dict "silta-ingress" "allow" -}}
 {{- $from := list (dict "namespaceSelector" (dict "matchLabels" (dict "name" "silta-cluster"))) -}}
 {{- $params := mergeOverwrite . (dict "id" $id "additionalPodSelectors" $podSelectors "from" $from) -}}
 {{ include "silta-release.networkPolicy" $params }}
-
-# Allow access to pods containing shell from the jumphost in the silta-cluster namespace
-{{ if .Values.shell.enabled -}}
----
-{{- $id := "allow-shell" -}}
-{{- $podSelectors := dict "service" "shell" -}}
-{{- $from := list (dict "namespaceSelector" (dict "matchLabels" (dict "name" "silta-cluster"))) -}}
-{{- $params := mergeOverwrite . (dict "id" $id "additionalPodSelectors" $podSelectors "from" $from) -}}
-{{ include "silta-release.networkPolicy" $params }}
-{{- end }}
