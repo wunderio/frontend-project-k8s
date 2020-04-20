@@ -25,9 +25,10 @@ SSH connection (limited access through VPN):
 
   {{ range $index, $service := .Values.services -}}
     {{ if $service.mounts }}
-Importing files to service {{ $index }}:
       {{ range $indexMount, $service.mounts -}}
+Importing files to service '{{ $index }}', folder '{{ (index $.Values.mounts $indexMount).mountPath }}':
 rsync -azv -e 'ssh -A -J {{ include "frontend.jumphost" $ }}' local_folder/ www-admin@{{ template "frontend.environment.hostname" $ }}-shell-{{ $index }}.{{ $.Release.Namespace }}:{{ (index $.Values.mounts $indexMount).mountPath }}
+
       {{ end -}}
     {{ end -}}
   {{ end -}}
