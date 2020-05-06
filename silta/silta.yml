@@ -42,3 +42,9 @@ rabbitmq:
 
 shell:
   enabled: true
+
+nginx:
+  redirects:
+    - description: 'Redirect main path to default service'
+      from: '~://feature-redirects.frontend-project-k8s.silta.wdr.io'
+      to: https://feature-redirects.frontend-project-k8s.silta.wdr.io/hello
