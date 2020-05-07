@@ -4,6 +4,12 @@
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
 # for all possible options.
 
+nginx:
+  redirects:
+    - description: 'Redirect main path to default service (exact match)'
+      from: /
+      to: /hello
+
 services: 
   hello:
     exposedRoute: '/hello'
