@@ -61,16 +61,6 @@ tests:
             name: ENVIRONMENT_DOMAIN
             value: release-name.namespace.silta.wdr.io
 
-  - it: sets shell environment variable correctly
-    set:
-      shell.enabled: true
-      shell.gitAuth.repositoryUrl: 'foo'
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: GITAUTH_SCOPE
-            value: foo
   - it: uses the default port
     set:
       services:
