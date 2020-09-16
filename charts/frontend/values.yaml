@@ -1,4 +1,5 @@
 # Configuration for the wunderio/silta-release subchart.
+# see: https://github.com/wunderio/charts/blob/master/silta-release/values.yaml
 silta-release:
   downscaler:
     enabled: true
