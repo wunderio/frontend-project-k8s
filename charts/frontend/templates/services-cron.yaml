@@ -84,6 +84,21 @@ spec:
             {{- end }}
             {{- end }}
           restartPolicy: OnFailure
+
+          {{ if or $job.nodeSelector $service.nodeSelector -}}
+          nodeSelector:
+            {{ if $job.nodeSelector }}
+            {{- $job.nodeSelector | toYaml | nindent 12 }}
+            {{ else }}
+            {{- $service.nodeSelector | toYaml | nindent 12 }}
+            {{- end }}
+          tolerations:
+            {{ if $job.nodeSelector }}
+            {{- include "frontend.tolerations" $job.nodeSelector | nindent 12 }}
+            {{ else }}
+            {{- include "frontend.tolerations" $service.nodeSelector | nindent 12 }}
+            {{- end }}
+          {{- end }}
 ---
 {{- end }}
 {{- end }}
