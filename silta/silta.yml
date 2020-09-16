@@ -48,3 +48,7 @@ rabbitmq:
 
 shell:
   enabled: true
+
+silta-release:
+  proxy:
+    enabled: true
