@@ -52,3 +52,6 @@ shell:
 silta-release:
   proxy:
     enabled: true
+
+mariadb:
+  enabled: true
