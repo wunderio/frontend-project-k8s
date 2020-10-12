@@ -28,6 +28,8 @@ workflows:
           name: 'Validate frontend chart'
 
       - silta/frontend-build-deploy: &build-deploy
+          requires:
+            - 'Validate frontend chart'
           name: 'Silta build & deploy'
 
           executor: silta-latest
