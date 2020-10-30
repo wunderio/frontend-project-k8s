@@ -14,8 +14,13 @@ services:
   hello:
     exposedRoute: '/hello'
     port: 4000
+    mounts:
+      - files
     env:
       FOO: 'BAR'
+    postrelease:
+      command: |
+        [ -f /app/files/test.txt ] && echo "test file exists."
 
   world:
     exposedRoute: '/world'
@@ -27,6 +32,9 @@ services:
       world-cli:
         command: echo $(date) > /app/files/lastupdate.txt
         schedule: "~ * * * *"
+    postrelease:
+      command: |
+        touch /app/files/test1.txt
 
 domainPrefixes: ['fi', 'lv' ]
 
