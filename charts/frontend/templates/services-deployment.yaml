@@ -129,7 +129,7 @@ spec:
                   values:
                   - frontend-{{ $index }}
       {{- end }}
-{{- if $service.postrelease }}
+{{- if $service.postupgrade }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -159,7 +159,7 @@ spec:
         command: ["/bin/bash", "-c"]
         args:
         - |
-            {{ $service.postrelease.command }}
+            {{ $service.postupgrade.command }}
         volumeMounts:
           {{ if $service.mounts }}
           {{- range $index, $mountName := $service.mounts -}}

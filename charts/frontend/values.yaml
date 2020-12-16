@@ -178,7 +178,7 @@ services: {}
 
   #  # Post-release hook.
   #  # This is run every time a new release is deployed
-  #  postrelease:
+  #  postupgrade:
   #    command: |
   #      'your command here'
 
