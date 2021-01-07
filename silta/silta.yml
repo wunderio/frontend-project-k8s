@@ -18,7 +18,10 @@ services:
       FOO: 'BAR'
     postupgrade:
       command: |
-        echo Testing postrelease job
+        echo Testing postupgrade job 2nd
+    postinstall:
+      command: |
+        echo Testing postinstall job 2nd
 
   world:
     exposedRoute: '/world'
