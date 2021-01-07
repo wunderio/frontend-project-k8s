@@ -16,9 +16,6 @@ services:
     port: 4000
     env:
       FOO: 'BAR'
-    postupgrade:
-      command: |
-        echo Testing postrelease job
 
   world:
     exposedRoute: '/world'
