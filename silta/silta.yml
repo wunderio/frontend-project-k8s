@@ -10,18 +10,18 @@ nginx:
       from: /
       to: /hello
 
-services: 
+services:
   hello:
     exposedRoute: '/hello'
     port: 4000
     env:
       FOO: 'BAR'
-    postupgrade:
-      command: |
-        echo Testing postupgrade job 2nd
     postinstall:
       command: |
-        echo Testing postinstall job 2nd
+        echo Postinstall command executed
+    postupgrade:
+      command: |
+        echo Postupgrade command executed
 
   world:
     exposedRoute: '/world'

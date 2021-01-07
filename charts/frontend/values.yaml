@@ -185,6 +185,12 @@ services: {}
   #     limits:
   #       memory: 512Mi
 
+  #  # Post-install hook.
+  #  # This is run every time a new environment (most commonly a first deployment for a new branch) is created
+  #  postinstall:
+  #    command: |
+  #      'your command here'
+
   #  # Post-release hook.
   #  # This is run every time a new release is deployed
   #  postupgrade:
