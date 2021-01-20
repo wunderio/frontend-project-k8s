@@ -24,7 +24,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-backup
   labels:
-    {{- include "drupal.release_labels" . | nindent 4 }}
+    name: {{ .Release.Name }}-{{ $.Release.Namespace | sha256sum | trunc 7 }}-backup
 spec:
   storageClassName: {{ .Values.backup.storageClassName }}
   accessModes:
