@@ -1,0 +1,40 @@
+{{- if .Values.backup.enabled }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-backup
+  labels:
+    name: {{ .Release.Name }}-{{ $.Release.Namespace | sha256sum | trunc 7 }}-backup
+    cronjob-type: backup
+spec:
+  schedule: {{ .Values.backup.schedule | replace "~" (randNumeric 1) | quote }}
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 3600
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  suspend: false
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 7200
+      backoffLimit: 2
+      template:
+        spec:
+          enableServiceLinks: false
+          containers:
+          - name: backup
+            image: alpine:3.13.0
+            volumeMounts:
+              - name: {{ .Release.Name }}-backup
+                mountPath: /backups
+            command: ["/bin/bash", "-c"]
+            args:
+              - |
+                sleep 5000
+          restartPolicy: Never
+          volumes:
+            - name: {{ .Release.Name }}-backup
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-backup
+{{- end }}
+
+---

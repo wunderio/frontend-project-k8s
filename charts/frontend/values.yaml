@@ -244,7 +244,7 @@ shell:
 
 backup:
   # Whether backups should be taken for the current environment.
-  enabled: true
+  enabled: false
 
   # Cron schedule when backups should be taken, this is expected to take place daily.
   # ~ gets replaced with a random digit between 0 and 9 to prevent having all cron jobs at once.

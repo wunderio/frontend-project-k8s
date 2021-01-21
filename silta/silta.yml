@@ -61,3 +61,6 @@ silta-release:
 
 mariadb:
   enabled: true
+
+backup:
+  enabled: true
