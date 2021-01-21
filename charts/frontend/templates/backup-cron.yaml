@@ -24,14 +24,25 @@ spec:
           - name: backup
             image: alpine:3.13.0
             volumeMounts:
+              {{- range $index, $mount := $.Values.mounts }}
+              {{- if eq $mount.enabled true }}
+              - name: frontend-{{ $index }}
+                mountPath: /backup_source/{{ $index }}
+              {{- end }}
+              {{- end }}
               - name: {{ .Release.Name }}-backup
                 mountPath: /backups
             command: ["/bin/sh", "-c"]
             args:
               - |
-                sleep 5000
+                sleep 50000
           restartPolicy: Never
           volumes:
+            {{- range $index, $mount := $.Values.mounts }}
+            - name: frontend-{{ $index }}
+              persistentVolumeClaim:
+                claimName: {{ $.Release.Name }}-{{ $index }}
+            {{- end }}
             - name: {{ .Release.Name }}-backup
               persistentVolumeClaim:
                 claimName: {{ .Release.Name }}-backup
