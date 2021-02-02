@@ -20,9 +20,25 @@ spec:
       template:
         spec:
           enableServiceLinks: false
+          initContainers:
+            - name: backup_linking
+              image: busybox:1.33.0
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "initContainer finished job"; exit 0;
+              volumeMounts:
+                {{- range $index, $mount := $.Values.mounts }}
+                {{- if eq $mount.enabled true }}
+                - name: frontend-{{ $index }}
+                  mountPath: /backup_source/{{ $index }}
+                {{- end }}
+                {{- end }}
+                - name: {{ .Release.Name }}-backup
+                  mountPath: /backups
           containers:
           - name: backup
-            image: alpine:3.13.0
+            image: busybox:1.33.0
             volumeMounts:
               {{- range $index, $mount := $.Values.mounts }}
               {{- if eq $mount.enabled true }}
@@ -36,8 +52,34 @@ spec:
             args:
               - |
                 sleep 50000
+          {{- range $index, $service := .Values.services }}
+          - name: {{ $index }}
+            image: {{ $service.image | quote }}
+            volumeMounts:
+              {{ if $service.mounts }}
+              {{- range $index, $mountName := $service.mounts -}}
+              {{ $mount := (index $.Values.mounts $mountName) }}
+              {{- if eq $mount.enabled true }}
+              - name: frontend-{{ $mountName }}
+                mountPath: {{ $mount.mountPath }}
+              {{- end }}
+              {{- end }}
+              {{- end }}
+          {{- end }}
           restartPolicy: Never
           volumes:
+            {{- range $index, $service := .Values.services }}
+            {{ if $service.mounts }}
+            {{- range $index, $mountName := $service.mounts -}}
+            {{ $mount := (index $.Values.mounts $mountName) }}
+            {{- if eq $mount.enabled true }}
+            - name: frontend-{{ $mountName }}
+              persistentVolumeClaim:
+                claimName: {{ $.Release.Name }}-{{ $mountName }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
             {{- range $index, $mount := $.Values.mounts }}
             - name: frontend-{{ $index }}
               persistentVolumeClaim:
