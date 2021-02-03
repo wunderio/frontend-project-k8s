@@ -59,6 +59,7 @@ spec:
                 {{- include "frontend.backup.receive-destination-path" . | nindent 16 }}
                 echo "made in backup container" >> /backup/current/backup_file;
           {{- range $index, $service := .Values.services }}
+          {{- if $service.mounts }}
           - name: {{ $index }}
             image: {{ $service.image | quote }}
             command: ["/bin/sh", "-c"]
@@ -73,6 +74,8 @@ spec:
               value: {{ $val | quote }}
             {{- end }}
             volumeMounts:
+              - name: {{ $.Release.Name }}-backup
+                mountPath: /backups
               - mountPath: /shared
                 name: shared-data
               {{ if $service.mounts }}
@@ -84,6 +87,7 @@ spec:
               {{- end }}
               {{- end }}
               {{- end }}
+          {{- end }}
           {{- end }}
           restartPolicy: Never
           volumes:
