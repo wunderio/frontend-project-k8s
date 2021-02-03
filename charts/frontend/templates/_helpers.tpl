@@ -25,6 +25,21 @@ release: {{ .Release.Name }}
 {{- end }}
 {{- end }}
 
+{{- define "frontend.backup.make-destination-path" -}}
+  set -e
+
+  # Generate the id of the backup.
+  BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
+  BACKUP_LOCATION="/backups/$BACKUP_ID-{{ .Values.environmentName }}"
+
+  echo $BACKUP_LOCATION >> /shared/backup_location
+  mkdir -p $BACKUP_LOCATION
+
+  # Unlink returns error if path provided doesnt exist
+  unlink /backups/current || true
+  ln -s $BACKUP_LOCATION /backups/current
+{{- end }}
+
 {{- define "services.env" }}
 {{- $service := .service -}}
 - name: 'PORT'

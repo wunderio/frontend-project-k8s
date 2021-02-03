@@ -26,7 +26,7 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  echo "initContainer finished job"; exit 0;
+                  {{- include "frontend.backup.make-destination-path" . | nindent 18 }}
               volumeMounts:
                 {{- range $index, $mount := $.Values.mounts }}
                 {{- if eq $mount.enabled true }}
@@ -36,6 +36,8 @@ spec:
                 {{- end }}
                 - name: {{ .Release.Name }}-backup
                   mountPath: /backups
+                - mountPath: /shared
+                  name: shared-data
           containers:
           - name: backup
             image: busybox:1.33.0
@@ -48,10 +50,12 @@ spec:
               {{- end }}
               - name: {{ $.Release.Name }}-backup
                 mountPath: /backups
+              - mountPath: /shared
+                name: shared-data
             command: ["/bin/sh", "-c"]
             args:
               - |
-                sleep 50000
+                sleep 50000;
           {{- range $index, $service := .Values.services }}
           - name: {{ $index }}
             image: {{ $service.image | quote }}
@@ -62,6 +66,8 @@ spec:
               value: {{ $val | quote }}
             {{- end }}
             volumeMounts:
+              - mountPath: /shared
+                name: shared-data
               {{ if $service.mounts }}
               {{- range $index, $mountName := $service.mounts -}}
               {{ $mount := (index $.Values.mounts $mountName) }}
@@ -74,8 +80,11 @@ spec:
           {{- end }}
           restartPolicy: Never
           volumes:
+            - name: shared-data
+              emptyDir:
+                sizeLimit: 10M
             {{- range $index, $service := .Values.services }}
-            {{ if $service.mounts }}
+            {{- if $service.mounts -}}
             {{- range $index, $mountName := $service.mounts -}}
             {{ $mount := (index $.Values.mounts $mountName) }}
             {{- if eq $mount.enabled true }}
