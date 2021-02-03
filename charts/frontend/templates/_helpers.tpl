@@ -42,7 +42,7 @@ release: {{ .Release.Name }}
 {{- define "frontend.backup.receive-destination-path" -}}
   set -e
 
-  $BACKUP_LOCATION=$(cat /shared-data/backup_location)
+  BACKUP_LOCATION=$(cat /shared/backup_location)
   mkdir /backup
   ln -s $BACKUP_LOCATION /backup/current
 {{- end }}
