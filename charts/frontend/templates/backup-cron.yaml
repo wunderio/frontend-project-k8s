@@ -65,7 +65,7 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                {{- include "frontend.backup.receive-destination-path" . | nindent 16 -}}
+                {{- include "frontend.backup.receive-destination-path" . | nindent 16 }}
                 echo "made in {{ $index }} container" >> /backup/current/{{ $index }}_file
             env:
             {{- include "services.env" (dict "Values" $.Values "Release" $.Release "service" $service) | nindent 12 }}
