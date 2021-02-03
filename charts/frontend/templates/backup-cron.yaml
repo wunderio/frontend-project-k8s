@@ -26,7 +26,8 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  {{- include "frontend.backup.make-destination-path" . | nindent 18 }}
+                  {{- include "frontend.backup.create-destination-path" . | nindent 18 }}
+                  echo "made in init container" >> /backup/current/initContainer_file
               volumeMounts:
                 {{- range $index, $mount := $.Values.mounts }}
                 {{- if eq $mount.enabled true }}
@@ -55,10 +56,16 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                sleep 50000;
+                {{- include "frontend.backup.receive-destination-path" . | nindent 16 }}
+                echo "made in backup container" >> /backup/current/backup_file;
           {{- range $index, $service := .Values.services }}
           - name: {{ $index }}
             image: {{ $service.image | quote }}
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                {{- include "frontend.backup.receive-destination-path" . | nindent 16 -}}
+                echo "made in {{ $index }} container" >> /backup/current/{{ $index }}_file
             env:
             {{- include "services.env" (dict "Values" $.Values "Release" $.Release "service" $service) | nindent 12 }}
             {{- range $key, $val := $service.env }}

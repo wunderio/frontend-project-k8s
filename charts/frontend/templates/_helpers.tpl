@@ -25,7 +25,7 @@ release: {{ .Release.Name }}
 {{- end }}
 {{- end }}
 
-{{- define "frontend.backup.make-destination-path" -}}
+{{- define "frontend.backup.create-destination-path" -}}
   set -e
 
   # Generate the id of the backup.
@@ -33,11 +33,18 @@ release: {{ .Release.Name }}
   BACKUP_LOCATION="/backups/$BACKUP_ID-{{ .Values.environmentName }}"
 
   echo $BACKUP_LOCATION >> /shared/backup_location
-  mkdir -p $BACKUP_LOCATION
+  mkdir -p $BACKUP_LOCATION; touch $BACKUP_LOCATION/.anchor
 
-  # Unlink returns error if path provided doesnt exist
-  unlink /backups/current || true
-  ln -s $BACKUP_LOCATION /backups/current
+  mkdir /backup
+  ln -s $BACKUP_LOCATION /backup/current
+{{- end }}
+
+{{- define "frontend.backup.receive-destination-path" -}}
+  set -e
+
+  $BACKUP_LOCATION = $(cat /shared-data/backup_location)
+  mkdir /backup
+  ln -s $BACKUP_LOCATION /backup/current
 {{- end }}
 
 {{- define "services.env" }}
