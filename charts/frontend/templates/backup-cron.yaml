@@ -106,11 +106,6 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
-            {{- range $index, $mount := $.Values.mounts }}
-            - name: frontend-{{ $index }}
-              persistentVolumeClaim:
-                claimName: {{ $.Release.Name }}-{{ $index }}
-            {{- end }}
             - name: {{ .Release.Name }}-backup
               persistentVolumeClaim:
                 claimName: {{ .Release.Name }}-backup
