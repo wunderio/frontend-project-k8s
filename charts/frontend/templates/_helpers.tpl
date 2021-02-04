@@ -30,21 +30,12 @@ release: {{ .Release.Name }}
 
   # Generate the id of the backup.
   BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
-  BACKUP_LOCATION="/backups/$BACKUP_ID-{{ .Values.environmentName }}"
+  BACKUP_LOCATION="/backup_archive/$BACKUP_ID-{{ .Values.environmentName }}"
 
-  echo $BACKUP_LOCATION >> /shared/backup_location
+  #echo $BACKUP_LOCATION >> /shared/backup_location
   mkdir -p $BACKUP_LOCATION; touch $BACKUP_LOCATION/.anchor
 
-  mkdir /backup
-  ln -s $BACKUP_LOCATION /backup/current
-{{- end }}
-
-{{- define "frontend.backup.receive-destination-path" -}}
-  set -e
-
-  BACKUP_LOCATION=$(cat /shared/backup_location)
-  mkdir /backup
-  ln -s $BACKUP_LOCATION /backup/current
+  ln -s $BACKUP_LOCATION /backups/current
 {{- end }}
 
 {{- define "services.env" }}

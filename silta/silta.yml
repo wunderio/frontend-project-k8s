@@ -22,6 +22,9 @@ services:
     postupgrade:
       command: |
         echo Postupgrade command executed
+    backup:
+      command: |
+        echo "made in hello container" >> /backups/current/hello_file
 
   world:
     exposedRoute: '/world'
@@ -33,6 +36,9 @@ services:
       world-cli:
         command: echo $(date) > /app/files/lastupdate.txt
         schedule: "~ * * * *"
+    backup:
+      command: |
+        echo "made in world container" >> /backups/current/world_file
 
 domainPrefixes: ['fi', 'lv' ]
 
