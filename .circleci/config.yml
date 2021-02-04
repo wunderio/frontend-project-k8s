@@ -7,10 +7,13 @@ executors:
   silta-latest:
     docker:
       - image: wunderio/silta-circleci:latest
+  node12:
+    docker:
+      - image: eu.gcr.io/silta-images/cicd:circleci-php7.3-node12-composer1-v0.1
 
 jobs:
   validate:
-    executor: silta/silta
+    executor: node12
     steps:
       - checkout
       - run:
@@ -32,7 +35,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Silta build & deploy'
 
-          executor: silta-latest
+          executor: node12
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
