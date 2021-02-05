@@ -32,7 +32,6 @@ release: {{ .Release.Name }}
   BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
   BACKUP_LOCATION="/backup_archive/$BACKUP_ID-{{ .Values.environmentName }}"
 
-  #echo $BACKUP_LOCATION >> /shared/backup_location
   mkdir -p $BACKUP_LOCATION; touch $BACKUP_LOCATION/.anchor
 
   ln -s $BACKUP_LOCATION /backups/current

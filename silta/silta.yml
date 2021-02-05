@@ -22,11 +22,6 @@ services:
     postupgrade:
       command: |
         echo Postupgrade command executed
-    backup:
-      # Extra commands for gathering data to be backed up.
-      # Data should be stored at /backups/current
-      command: |
-        echo "made in hello container" >> /backups/current/hello_file
 
   world:
     exposedRoute: '/world'

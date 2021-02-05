@@ -208,6 +208,11 @@ services: {}
   #      resources:
   #        requests:
   #          cpu: 500m
+  #  backup:
+  #   # Extra commands for gathering data to be backed up.
+  #   # Commands must store data at /backups/current
+  #   command: |
+  #     your command goes here
 
   #   nodeSelector:
   #     cloud.google.com/gke-nodepool: static-ip
@@ -230,7 +235,8 @@ backup:
   # ~ gets replaced with a random digit between 0 and 9 to prevent having all cron jobs at once.
   schedule: '~ 2 * * *'
 
-  storage: 100Mi
+  # How big should the backup storage be
+  storage: 1G
   storageClassName: silta-shared
   csiDriverName: csi-rclone
 
