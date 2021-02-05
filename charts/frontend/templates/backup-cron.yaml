@@ -22,7 +22,7 @@ spec:
           enableServiceLinks: false
           initContainers:
             - name: backup-linking
-              image: eeacms/rsync:2.3
+              image: eu.gcr.io/silta-images/rsync:latest
               command: ["/bin/sh", "-c"]
               args:
                 - |
@@ -40,7 +40,7 @@ spec:
                   name: shared-data
           containers:
           - name: backup
-            image: eeacms/rsync:2.3
+            image: eu.gcr.io/silta-images/rsync:latest
             volumeMounts:
               {{- range $index, $mount := $.Values.mounts -}}
               {{- if eq $mount.enabled true }}
