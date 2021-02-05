@@ -27,7 +27,6 @@ spec:
               args:
                 - |
                   {{- include "frontend.backup.create-destination-path" . | nindent 18 }}
-                  echo "made in init container" >> /backups/current/initContainer_file
               volumeMounts:
                 {{- range $index, $mount := $.Values.mounts }}
                 {{- if eq $mount.enabled true }}
@@ -56,7 +55,7 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                echo "made in backup container" >> /backups/current/backup_file;
+                {{- include "frontend.backup.copy-mounts" . | nindent 18 }}
           {{- range $index, $service := .Values.services }}
           {{- if $service.mounts }}
           - name: {{ $index }}

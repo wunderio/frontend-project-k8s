@@ -38,6 +38,12 @@ release: {{ .Release.Name }}
   ln -s $BACKUP_LOCATION /backups/current
 {{- end }}
 
+{{- define "frontend.backup.copy-mounts" -}}
+  set -e
+
+  cp -r /values_mounts/* /backups/current/
+{{- end }}
+
 {{- define "services.env" }}
 {{- $service := .service -}}
 - name: 'PORT'
