@@ -41,7 +41,7 @@ release: {{ .Release.Name }}
 {{- define "frontend.backup.copy-mounts" -}}
   set -e
 
-  cp -r /values_mounts/* /backups/current/
+  rsync -az /values_mounts/ /backups/current/
 {{- end }}
 
 {{- define "services.env" }}
