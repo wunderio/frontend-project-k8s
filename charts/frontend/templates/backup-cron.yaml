@@ -4,7 +4,6 @@ kind: CronJob
 metadata:
   name: {{ .Release.Name }}-backup
   labels:
-    name: {{ .Release.Name }}-{{ $.Release.Namespace | sha256sum | trunc 7 }}-backup
     cronjob-type: backup
 spec:
   schedule: {{ .Values.backup.schedule | replace "~" (randNumeric 1) | quote }}
@@ -57,13 +56,19 @@ spec:
               - |
                 {{- include "frontend.backup.copy-mounts" . | nindent 18 }}
           {{- range $index, $service := .Values.services }}
-          {{- if $service.mounts }}
+          {{- $backupCommand := "" }}
+          {{- if (hasKey $service "backup") }}
+          {{- if (hasKey $service.backup "command") }}
+          {{- $backupCommand = $service.backup.command }}
+          {{- end }}
+          {{- end }}
+          {{- if $backupCommand }}
           - name: {{ $index }}
             image: {{ $service.image | quote }}
             command: ["/bin/sh", "-c"]
             args:
               - |
-                {{- $service.backup.command | nindent 16 }}
+                {{- $backupCommand | nindent 16 }}
             env:
             {{- include "services.env" (dict "Values" $.Values "Release" $.Release "service" $service) | nindent 12 }}
             {{- range $key, $val := $service.env }}
