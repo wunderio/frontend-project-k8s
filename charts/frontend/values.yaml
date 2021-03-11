@@ -70,6 +70,7 @@ ingress:
 
 # Infrastructure related settings.
 cluster: 
+  type: gke
   vpcNative: false
 
 # backendConfig customizations for main service
