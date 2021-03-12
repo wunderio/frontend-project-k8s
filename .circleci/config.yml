@@ -68,11 +68,37 @@ workflows:
                 command: helm dependency build ./charts/frontend
             - run:
                 name: Dry-run helm install
-                command: helm install --dry-run --generate-name ./charts/frontend
+                command: helm install --dry-run --generate-name ./charts/frontend --values charts/frontend/test.values.yaml
           context: silta_dev
           filters:
             branches:
-              ignore: 'production'
+              ignore:
+                - production
+                - /feature\/test\/.*/
+                - /feature\/aws\/.*/
+
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the test cluster deployments
+          <<: *build-deploy
+          name: Silta build & deploy to test cluster
+          silta_config: silta/silta.yml,silta/silta-test.yml
+          context: silta_test
+          filters:
+            branches:
+              only: 
+                - feature\/test\/.*/
+
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the aws cluster deployments
+          <<: *build-deploy
+          name: Silta build & deploy to aws cluster
+          silta_config: silta/silta.yml,silta/silta-aws.yml
+          context: silta_aws
+          filters:
+            branches:
+              only: 
+                - /feature\/aws\/.*/
+
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the production environment.
           <<: *build-deploy
