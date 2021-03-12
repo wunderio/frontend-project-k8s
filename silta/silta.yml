@@ -67,3 +67,4 @@ mariadb:
 
 backup:
   enabled: true
+  retention: 1
