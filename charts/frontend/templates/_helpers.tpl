@@ -25,6 +25,24 @@ release: {{ .Release.Name }}
 {{- end }}
 {{- end }}
 
+{{- define "frontend.backup.create-destination-path" -}}
+  set -e
+
+  # Generate the id of the backup.
+  BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
+  BACKUP_LOCATION="/backup_archive/$BACKUP_ID-{{ .Values.environmentName }}"
+
+  mkdir -p $BACKUP_LOCATION; touch $BACKUP_LOCATION/.anchor
+
+  ln -s $BACKUP_LOCATION /backups/current
+{{- end }}
+
+{{- define "frontend.backup.copy-mounts" -}}
+  set -e
+
+  rsync -az /values_mounts/ /backups/current/
+{{- end }}
+
 {{- define "services.env" }}
 {{- $service := .service -}}
 - name: 'PORT'

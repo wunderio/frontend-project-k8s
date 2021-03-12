@@ -33,6 +33,9 @@ services:
       world-cli:
         command: echo $(date) > /app/files/lastupdate.txt
         schedule: "~ * * * *"
+    backup:
+      command: |
+        echo "made in world container" >> /backups/current/world_file
 
 domainPrefixes: ['fi', 'lv' ]
 
@@ -60,4 +63,7 @@ silta-release:
     enabled: true
 
 mariadb:
+  enabled: true
+
+backup:
   enabled: true
