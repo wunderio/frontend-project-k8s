@@ -54,7 +54,11 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                {{- include "frontend.backup.copy-mounts" . | nindent 18 }}
+                {{- include "frontend.backup.copy-mounts" . | nindent 16 }}
+                
+                # Delete old backups
+                find /backups/ -mtime +{{ .Values.backup.retention }} -exec rm -r {} \;
+
           {{- range $index, $service := .Values.services }}
           {{- $backupCommand := "" }}
           {{- if (hasKey $service "backup") }}
