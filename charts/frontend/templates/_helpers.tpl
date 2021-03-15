@@ -30,11 +30,11 @@ set -e
 
 # Generate the id of the backup.
 BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
-BACKUP_LOCATION="/backup_archive/$BACKUP_ID-{{ .Values.environmentName }}"
+BACKUP_LOCATION="/backup_archive/"
 
-mkdir -p $BACKUP_LOCATION; touch $BACKUP_LOCATION/.anchor
+mkdir -p "${BACKUP_LOCATION}/${BACKUP_ID}"; touch "${BACKUP_LOCATION}/${BACKUP_ID}/.anchor"
 
-ln -s $BACKUP_LOCATION /backups/current
+ln -s "${BACKUP_LOCATION}/${BACKUP_ID}" /backups/current
 {{- end }}
 
 {{- define "frontend.backup.copy-mounts" -}}
