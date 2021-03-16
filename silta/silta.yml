@@ -67,4 +67,5 @@ mariadb:
 
 backup:
   enabled: true
+  schedule: '*/20 * * * *'
   retention: 1
