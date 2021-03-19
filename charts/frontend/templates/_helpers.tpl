@@ -26,7 +26,7 @@ release: {{ .Release.Name }}
 {{- end }}
 
 {{- define "frontend.backup.create-destination-path" -}}
-set -e
+set -ex
 
 # Generate the id of the backup.
 BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
@@ -38,7 +38,7 @@ ln -s "${BACKUP_LOCATION}/${BACKUP_ID}" /backups/current
 {{- end }}
 
 {{- define "frontend.backup.copy-mounts" -}}
-set -e
+set -ex
 
 rsync -az /values_mounts/ /backups/current/
 {{- end }}

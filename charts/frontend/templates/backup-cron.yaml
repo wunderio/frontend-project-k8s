@@ -22,7 +22,7 @@ spec:
           initContainers:
             - name: backup-linking
               image: eu.gcr.io/silta-images/rsync:latest
-              command: ["/bin/sh", "-c"]
+              command: ["/bin/bash", "-c"]
               args:
                 - |
                   {{- include "frontend.backup.create-destination-path" . | nindent 18 }}
@@ -51,12 +51,13 @@ spec:
                 mountPath: /backup_archive
               - mountPath: /backups
                 name: shared-data
-            command: ["/bin/sh", "-c"]
+            command: ["/bin/bash", "-c"]
             args:
               - |
                 {{- include "frontend.backup.copy-mounts" . | nindent 16 }}
                 
                 # Delete old backups
+                echo "Removing backups older than {{ .Values.backup.retention }} days"
                 find /backup_archive/ -mtime +{{ .Values.backup.retention }} -exec rm -r {} \;
 
           {{- range $index, $service := .Values.services }}
@@ -69,7 +70,7 @@ spec:
           {{- if $backupCommand }}
           - name: {{ $index }}
             image: {{ $service.image | quote }}
-            command: ["/bin/sh", "-c"]
+            command: ["/bin/bash", "-c"]
             args:
               - |
                 {{- $backupCommand | nindent 16 }}
