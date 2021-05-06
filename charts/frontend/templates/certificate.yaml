@@ -102,7 +102,7 @@ spec:
   acme:
     config:
       - http01:
-          ingress: {{ $.Release.Name }}-nginx
+          ingress: {{ $.Release.Name }}-nginx-{{ $domain.ingress }}
         domains:
           - {{ $domain.hostname }}
 ---
