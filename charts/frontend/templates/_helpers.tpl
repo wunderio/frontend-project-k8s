@@ -30,7 +30,7 @@ set -ex
 
 # Generate the id of the backup.
 BACKUP_ID=`date +%Y-%m-%d-%H-%M-%S`
-BACKUP_LOCATION="/backup_archive/"
+BACKUP_LOCATION="/backup_archive"
 
 mkdir -p "${BACKUP_LOCATION}/${BACKUP_ID}"; touch "${BACKUP_LOCATION}/${BACKUP_ID}/.anchor"
 
