@@ -258,12 +258,6 @@ backup:
   # How many days the backups will persist.
   retention: 14
 
-  # If specified, replace environment content with the given backup.
-  restoreId: ""
-
-  # Custom commands to be executed after backup db, files are imported
-  postRestoreCommand: |
-
   storage: 100Mi
   storageClassName: silta-shared
   csiDriverName: csi-rclone
