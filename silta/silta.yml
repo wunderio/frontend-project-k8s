@@ -64,8 +64,3 @@ silta-release:
 
 mariadb:
   enabled: true
-
-backup:
-  enabled: true
-  schedule: '*/5 * * * *'
-  retention: 1
