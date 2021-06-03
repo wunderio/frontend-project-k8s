@@ -17,7 +17,7 @@ spec:
     driver: {{ .Values.backup.csiDriverName }}
     volumeHandle: {{ .Release.Namespace }}-{{ $.Release.Namespace | sha256sum | trunc 7 }}-backup
     volumeAttributes:
-      remotePathSuffix: /{{ .Release.Namespace }}/backup
+      remotePathSuffix: /{{ .Release.Namespace }}/backup/{{ .Values.environmentName }}
   {{- end }}
 ---
 apiVersion: v1
