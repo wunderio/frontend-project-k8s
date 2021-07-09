@@ -143,8 +143,8 @@ data:
           {{ include "frontend.basicauth" $ | indent 6}}
 
           # Custom configuration gets included here
-          {{ if .Values.nginx.locationExtraConfig }}
-          {{ .Values.nginx.locationExtraConfig | nindent 10 }}
+          {{ if $.Values.nginx.locationExtraConfig }}
+          {{ $.Values.nginx.locationExtraConfig | nindent 10 }}
           {{- end }}
 
           location = {{ $service.exposedRoute }}/robots.txt {
