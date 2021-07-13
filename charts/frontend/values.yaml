@@ -151,7 +151,7 @@ nginx:
   # DEPRECATED. Please use serverExtraConfig instead
   extra_headers: {}
 
-  # DEPRECATED. Please use extraConfig instead
+  # DEPRECATED. Please use locationExtraConfig instead
   extra_conditions: ""
     # |
     # # need this for node OPTIONS requests to work while site has bauth
