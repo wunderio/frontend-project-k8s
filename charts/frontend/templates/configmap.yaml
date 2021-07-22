@@ -158,11 +158,7 @@ data:
           
           location = {{ $service.exposedRoute }}/robots.txt {
             access_log off;
-            {{- if not $.Values.nginx.robotsTxt.allow }}
-              add_header Content-Type text/plain;
-              return 200 'User-agent: *\nDisallow: /';
-            {{- end}}
-          } 
+          }
 
           ## Most sites won't have configured favicon
           ## and since its always grabbed, turn it off in access log
