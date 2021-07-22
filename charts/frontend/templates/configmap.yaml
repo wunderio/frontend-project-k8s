@@ -71,6 +71,15 @@ data:
 
         map_hash_bucket_size 128;
 
+        map $http_host $x_robots_tag_header {
+            "~{{ template "frontend.domain" $ }}$" "noindex, nofollow, nosnippet, noarchive";
+            {{- range $index, $prefix := .Values.domainPrefixes }}
+            "~{{$prefix}}.{{ template "frontend.domain" $ }}$" "noindex, nofollow, nosnippet, noarchive";
+            {{- end }}
+            default  '';
+        }
+        add_header                  X-Robots-Tag $x_robots_tag_header;
+
         map $uri $no_slash_uri {                                                                                                                           
             ~^/(?<no_slash>.*)$ $no_slash;                                                                                                                 
         }
@@ -105,8 +114,8 @@ data:
         {{- end }}
         {{- end }}
     }
-    {{- end }}                                      
-                                          
+    {{- end }}
+
     server {                               
         server_name frontend;
         listen 80;
