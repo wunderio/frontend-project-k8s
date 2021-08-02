@@ -15,7 +15,7 @@ spec:
   issuerRef:
     name: {{ $context_ssl.issuer }}
     kind: ClusterIssuer
-{{- include "cert-manager.api-version" . }}
+{{- if not ( .Capabilities.APIVersions.Has "cert-manager.io/v1" ) }}
   acme:
     config:
       - http01:
@@ -38,7 +38,7 @@ spec:
   issuerRef:
     name: {{ $context_ssl.issuer }}
     kind: ClusterIssuer
-{{- include "cert-manager.api-version" $ }}
+{{- if not ( $.Capabilities.APIVersions.Has "cert-manager.io/v1" ) }}
   acme:
     config:
       - http01:
@@ -103,7 +103,7 @@ spec:
   issuerRef:
     name: {{ $domain.ssl.issuer }}
     kind: ClusterIssuer
-{{- include "cert-manager.api-version" $ }}
+{{- if not ( $.Capabilities.APIVersions.Has "cert-manager.io/v1" ) }}
   acme:
     config:
       - http01:
