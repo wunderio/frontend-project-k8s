@@ -37,7 +37,7 @@ services:
       command: |
         echo "made in world container" >> /backups/current/world_file
 
-domainPrefixes: ['fi', 'lv' ]
+#domainPrefixes: ['fi', 'lv' ]
 
 mounts:
   files:
