@@ -1,7 +1,7 @@
 dependencies:
 - name: mariadb
   repository: https://charts.bitnami.com/bitnami
-  version: 7.10.0
+  version: 7.10.4
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.4.1
@@ -11,5 +11,5 @@ dependencies:
 - name: silta-release
   repository: file://../silta-release
   version: 0.1.1
-digest: sha256:1745fd0ac7b81e6399e842b49794b78124fec84377daa2ef743d756adea1709d
-generated: "2020-09-16T12:43:16.656135136+03:00"
+digest: sha256:51aee37cbd8f599740c7524bc4b4eee8655601c9fa963848137bf906486caac1
+generated: "2021-08-02T18:33:33.457463527+03:00"
