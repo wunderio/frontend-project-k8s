@@ -394,6 +394,8 @@ elasticsearch:
 # override this?
 mongodb:
   enabled: false
+  image:
+    tag: 5.0.3
 
   # Use a low default to prevent unnecessary storage use.
   persistence:
