@@ -17,7 +17,7 @@ dependencies:
   condition: rabbitmq.enabled
 - name: mongodb
   version: 10.26.x
-  repository: https://charts.bitnami.com/mongodb
+  repository: https://charts.bitnami.com/bitnami
   condition: mongodb.enabled
 - name: silta-release
   version: 0.1.1
