@@ -64,3 +64,6 @@ silta-release:
 
 mariadb:
   enabled: true
+
+mongodb:
+  enabled: true
