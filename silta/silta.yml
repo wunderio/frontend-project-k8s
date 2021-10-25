@@ -16,7 +16,8 @@ services:
     port: 4000
     env:
       FOO: 'BAR'
-    probeDelay: 30
+    livenessProbe:
+      initialDelaySeconds: 30
     postinstall:
       command: |
         echo Postinstall command executed
