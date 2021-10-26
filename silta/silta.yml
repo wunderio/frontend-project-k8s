@@ -16,6 +16,11 @@ services:
     port: 4000
     env:
       FOO: 'BAR'
+    # Overridden liveness probe.
+    livenessProbe:
+      tcpSocket:
+        port: 4000
+      initialDelaySeconds: 30
     postinstall:
       command: |
         echo Postinstall command executed
