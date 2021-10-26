@@ -47,16 +47,16 @@ spec:
             mountPath: /etc/ssh/keys
           {{- end }}
         livenessProbe:
-        {{ if $service.livenessProbe }}
+        {{- if $service.livenessProbe }}
         {{- toYaml $service.livenessProbe | nindent 10 }}
-        {{ else }}
+        {{- else }}
           tcpSocket:
             port: {{ default $.Values.serviceDefaults.port $service.port }}
         {{- end }}
         readinessProbe:
-        {{ if $service.readinessProbe }}
+        {{- if $service.readinessProbe }}
         {{- toYaml $service.readinessProbe | nindent 10 }}
-        {{ else }}
+        {{- else }}
           tcpSocket:
             port: {{ default $.Values.serviceDefaults.port $service.port }}
         {{- end }}
