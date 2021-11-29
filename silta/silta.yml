@@ -72,3 +72,11 @@ mariadb:
 
 mongodb:
   enabled: true
+
+domainPrefixes:
+  - works
+  - notworking
+
+ssl:
+  issuer: letsencrypt-staging
+
