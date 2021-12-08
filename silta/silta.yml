@@ -52,23 +52,9 @@ mounts:
     storageClassName: silta-shared
     csiDriverName: csi-rclone
 
-elasticsearch:
-  enabled: true
-
-rabbitmq:
-  enabled: true
-  rabbitmq:
-    password: this-is-not-safe
-
 shell:
   enabled: true
 
 silta-release:
   proxy:
     enabled: true
-
-mariadb:
-  enabled: true
-
-mongodb:
-  enabled: true
