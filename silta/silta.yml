@@ -58,3 +58,6 @@ shell:
 silta-release:
   proxy:
     enabled: true
+
+elasticsearch:
+  enabled: true
