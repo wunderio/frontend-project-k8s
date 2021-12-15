@@ -1,3 +1,5 @@
-# Frontend Helm Chart
+# Silta frontend chart development project
 
-This chart is used to deploy a frontend application, typically as a decoupled frontend, also allows running custom docker images.
+[![CircleCI](https://circleci.com/gh/wunderio/frontend-project-k8s/tree/master.svg?style=svg)](https://circleci.com/gh/wunderio/frontend-project-k8s/tree/master)
+
+This is a development project for deploying a node.js application with the Silta frontend chart, configured to automatically deploy code to a [Kubernetes](https://kubernetes.io/) cluster using [CircleCI](https://circleci.com/). 
