@@ -58,15 +58,3 @@ shell:
 silta-release:
   proxy:
     enabled: true
-
-exposeDomains:
-  ing-test:
-    hostname: ing-test.frontend-project-k8s.dev.wdr.io
-    ssl:
-    enabled: true
-    issuer: letsencrypt
-  ing-test2:
-    hostname: ing-test.frontend-project-k8s.dev.wdr.io
-    ssl:
-      enabled: true
-      issuer: letsencrypt
