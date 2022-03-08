@@ -41,8 +41,6 @@ services:
     backup:
       command: |
         echo "made in world container" >> /backups/current/world_file
-    autoscaling:
-      enabled: true
 
 #domainPrefixes: ['fi', 'lv' ]
 
