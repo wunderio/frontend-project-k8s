@@ -162,3 +162,11 @@ batch/v1
 batch/v1beta1
 {{- end }}
 {{- end }}
+
+{{- define "autoscaling.api-version" }}
+{{- if semverCompare ">=1.23" .Capabilities.KubeVersion.Version }}
+autoscaling/v2
+{{- else }}
+autoscaling/v2beta1
+{{- end }}
+{{- end }}
