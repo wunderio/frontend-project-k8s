@@ -78,7 +78,7 @@ spec:
         {{- end }}
 ---
 {{- if .Values.nginx.autoscaling.enabled }}
-apiVersion: {{ include "autoscaling.api-version" . | trim }}
+apiVersion: {{ include "frontend.autoscaling.api-version" . | trim }}
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .Release.Name }}-nginx

@@ -155,7 +155,7 @@ networking.k8s.io/v1beta1
 {{- end }}
 {{- end }}
 
-{{- define "cron.api-version" }}
+{{- define "frontend.cron.api-version" }}
 {{- if semverCompare ">=1.21" .Capabilities.KubeVersion.Version }}
 batch/v1
 {{- else }}
@@ -163,7 +163,7 @@ batch/v1beta1
 {{- end }}
 {{- end }}
 
-{{- define "autoscaling.api-version" }}
+{{- define "frontend.autoscaling.api-version" }}
 {{- if semverCompare ">=1.23" .Capabilities.KubeVersion.Version }}
 autoscaling/v2
 {{- else }}

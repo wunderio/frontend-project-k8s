@@ -2,7 +2,7 @@
 {{ if $service.cron }}
 {{- range $jobName, $job := $service.cron }}
 
-apiVersion: {{ include "cron.api-version" $ | trim }}
+apiVersion: {{ include "frontend.cron.api-version" $ | trim }}
 kind: CronJob
 metadata:
   name: {{ $.Release.Name }}-{{ $jobName }}
