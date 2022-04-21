@@ -4,7 +4,7 @@ dependencies:
   version: 7.10.4
 - name: elasticsearch
   repository: file://../elasticsearch
-  version: 7.8.1
+  version: 7.8.2
 - name: rabbitmq
   repository: https://charts.bitnami.com/bitnami
   version: 6.17.5
@@ -14,5 +14,5 @@ dependencies:
 - name: silta-release
   repository: file://../silta-release
   version: 0.1.1
-digest: sha256:b3aaf4ef2adc5df31d7cc08159860c2a0402fa4bf8c72fd9db53fa02e0b78ce8
-generated: "2021-12-13T16:23:09.212253546+02:00"
+digest: sha256:b4f6e33c2d4109fca9726498df6f52b0c667f0db3fc038c4ccb7c89ac9f5884b
+generated: "2022-04-21T16:25:02.133186687+03:00"
