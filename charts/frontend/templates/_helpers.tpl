@@ -20,11 +20,11 @@ release: {{ .Release.Name }}
 {{- define "frontend.security_headers" }}
   ## https://www.owasp.org/index.php/List_of_useful_HTTP_headers.
   {{- range $header, $value := .Values.nginx.security_headers }}
-  add_header    {{ $header }} {{ $value }};
+  add_header                  {{ $header }} {{ $value }};
   {{- end }}
-  add_header    Strict-Transport-Security "max-age=31536000; {{ .Values.nginx.hsts_include_subdomains }} preload" always;
+  add_header                  Strict-Transport-Security "max-age=31536000; {{ .Values.nginx.hsts_include_subdomains }} preload" always;
   {{- if .Values.nginx.content_security_policy }}
-  add_header    Content-Security-Policy "{{ .Values.nginx.content_security_policy }}" always;
+  add_header                  Content-Security-Policy "{{ .Values.nginx.content_security_policy }}" always;
   {{- end }}
 {{- end }}
 
