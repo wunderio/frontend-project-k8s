@@ -27,7 +27,8 @@ services:
     postupgrade:
       command: |
         echo Postupgrade command executed
-
+    autoscaling:
+      enabled: true
   world:
     exposedRoute: '/world'
     port: 5000
