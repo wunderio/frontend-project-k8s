@@ -27,6 +27,7 @@ services:
     postupgrade:
       command: |
         echo Postupgrade command executed
+
   world:
     exposedRoute: '/world'
     port: 5000
