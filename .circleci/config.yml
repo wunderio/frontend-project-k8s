@@ -4,16 +4,19 @@ orbs:
   silta: silta/silta@dev:master
 
 executors:
-  silta-latest:
-    docker:
-      - image: wunderio/silta-circleci:latest
   node12:
     docker:
       - image: eu.gcr.io/silta-images/cicd:circleci-php7.3-node12-composer1-v0.1
+  node14:
+    docker:
+      - image: eu.gcr.io/silta-images/cicd:circleci-php8.0-node14-composer2-v0.1
+  node16:
+    docker:
+      - image: eu.gcr.io/silta-images/cicd:circleci-php8.0-node16-composer2-v0.1
 
 jobs:
   validate:
-    executor: node12
+    executor: node16
     steps:
       - checkout
       - run:
@@ -39,7 +42,7 @@ commands:
     steps:
       - run:
           name: Validate site url <<parameters.site_url>>
-          command: |            
+          command: |          
             curl -u $SITE_TEST_BAUTH <<parameters.site_url>>
 
 workflows:
@@ -54,7 +57,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy'
 
-          executor: node12
+          executor: node16
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
@@ -169,7 +172,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy'
 
-          executor: node12
+          executor: node16
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
