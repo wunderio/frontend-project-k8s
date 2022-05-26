@@ -109,7 +109,6 @@ workflows:
             branches:
               only: 
                 - master
-                - feature/chart-tests
       
       - site-test:
           name: 'Site test'
@@ -120,7 +119,6 @@ workflows:
             branches:
               only: 
                 - master
-                - feature/chart-tests
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the test cluster deployments
@@ -224,7 +222,6 @@ workflows:
             branches:
               only: 
                 - master
-                - feature/chart-tests
       
       - site-test:
           name: 'Site test'
@@ -235,4 +232,3 @@ workflows:
             branches:
               only: 
                 - master
-                - feature/chart-tests
