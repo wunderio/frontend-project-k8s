@@ -4,16 +4,19 @@ orbs:
   silta: silta/silta@dev:master
 
 executors:
-  silta-latest:
-    docker:
-      - image: wunderio/silta-circleci:latest
   node12:
     docker:
       - image: eu.gcr.io/silta-images/cicd:circleci-php7.3-node12-composer1-v0.1
+  node14:
+    docker:
+      - image: eu.gcr.io/silta-images/cicd:circleci-php8.0-node14-composer2-v0.1
+  node16:
+    docker:
+      - image: eu.gcr.io/silta-images/cicd:circleci-php8.0-node16-composer2-v0.1
 
 jobs:
   validate:
-    executor: node12
+    executor: node16
     steps:
       - checkout
       - run:
@@ -22,6 +25,25 @@ jobs:
       # - run:
       #     name: Helm lint
       #     command: helm lint ./charts/frontend
+  site-test:
+    docker:
+      - image: alpine/curl
+    steps:
+      - site-query:
+          site_url: https://master.frontend-project-k8s.dev.wdr.io/hello
+      - site-query:
+          site_url: https://master.frontend-project-k8s.silta-aks.wdr.io/hello
+
+commands:
+  site-query:
+    parameters:
+      site_url:
+        type: string
+    steps:
+      - run:
+          name: Validate site url <<parameters.site_url>>
+          command: |          
+            curl -u $SITE_TEST_BAUTH <<parameters.site_url>>
 
 workflows:
   version: 2
@@ -33,9 +55,9 @@ workflows:
       - silta/frontend-build-deploy: &build-deploy
           requires:
             - 'Validate frontend chart'
-          name: 'Silta build & deploy'
+          name: 'Build & deploy'
 
-          executor: node12
+          executor: node16
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
@@ -81,7 +103,27 @@ workflows:
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the test cluster deployments
           <<: *build-deploy
-          name: Silta build & deploy to test cluster
+          name: 'Build & deploy master to aks cluster'
+          context: silta_aks
+          filters:
+            branches:
+              only: 
+                - master
+      
+      - site-test:
+          name: 'Site test'
+          requires:
+            - 'Build & deploy'
+            - 'Build & deploy master to aks cluster'
+          filters:
+            branches:
+              only: 
+                - master
+
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the test cluster deployments
+          <<: *build-deploy
+          name: 'Build & deploy to test cluster'
           silta_config: silta/silta.yml,silta/silta-test.yml
           context: silta_test
           filters:
@@ -93,7 +135,7 @@ workflows:
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the aws cluster deployments
           <<: *build-deploy
-          name: Silta build & deploy to aws cluster
+          name: 'Build & deploy to aws cluster'
           silta_config: silta/silta.yml,silta/silta-aws.yml
           context: silta_aws
           filters:
@@ -104,9 +146,89 @@ workflows:
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the production environment.
           <<: *build-deploy
-          name: Silta build & deploy production
+          name: 'Build & deploy production'
           silta_config: silta/silta.yml,silta/silta-prod.yml
           context: silta_finland    
           filters:
             branches:
               only: production
+
+  weekly-build:
+    triggers:
+      - schedule:
+          cron: '0 8 * * 5'
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - validate:
+          name: 'Validate frontend chart'
+      
+      - silta/frontend-build-deploy: &build-deploy
+          requires:
+            - 'Validate frontend chart'
+          name: 'Build & deploy'
+
+          executor: node16
+          
+          # Use a local chart during development. 
+          # Don't copy this! We only use following 2 lines for chart development in this repository.
+          chart_name: './charts/frontend'
+          chart_repository: ''
+          
+          codebase-build:
+            # - silta/npm-install-build:
+            #     build-command: ''
+            - silta/npm-install-build:
+                path: './hello'
+                build-command: ''
+            - silta/npm-install-build:
+                path: './world'
+                build-command: ''
+          image_build_steps:
+            - silta/build-docker-image:
+                dockerfile: 'silta/hello.Dockerfile'
+                path: '.'
+                identifier: 'hello'
+            - silta/build-docker-image:
+                dockerfile: 'silta/world.Dockerfile'
+                path: '.'
+                identifier: 'world'
+            - run:
+                name: Add elastic repo for elasticsearch
+                command: helm repo add elastic https://helm.elastic.co
+            - run:
+                name: Build local helm dependencies
+                command: helm dependency build ./charts/frontend
+            - run:
+                name: Dry-run helm install
+                command: helm install --dry-run --generate-name ./charts/frontend --values charts/frontend/test.values.yaml
+          context: silta_dev
+          filters:
+            branches:
+              ignore:
+                - production
+                - /feature\/test\/.*/
+                - /feature\/aws\/.*/
+                - feature/cert-manager-upgrade
+
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the test cluster deployments
+          <<: *build-deploy
+          name: 'Build & deploy master to aks cluster'
+          context: silta_aks
+          filters:
+            branches:
+              only: 
+                - master
+      
+      - site-test:
+          name: 'Site test'
+          requires:
+            - 'Build & deploy'
+            - 'Build & deploy master to aks cluster'
+          filters:
+            branches:
+              only: 
+                - master
