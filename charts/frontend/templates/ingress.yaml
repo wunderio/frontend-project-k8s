@@ -179,6 +179,8 @@ spec:
   {{- if $domain.ssl }}
   {{- if $domain.ssl.enabled }}
   - secretName: {{ $.Release.Name }}-tls-{{ $domain_index }}{{- if eq $domain.ssl.issuer "custom" }}-custom{{- end }}
+    hosts: 
+      - {{ $domain.hostname | quote }}
   {{- end }}
   {{- end }}
   {{- end }}
