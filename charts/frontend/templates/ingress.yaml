@@ -65,7 +65,7 @@ spec:
   {{- range $index, $prefix := .Values.domainPrefixes }}
   {{ $params := dict "prefix" $prefix -}}
   - secretName: {{ $.Release.Name }}-tls-p{{ $index }}{{- if eq $.Values.ssl.issuer "custom" }}-custom{{- end }}
-      hosts: 
+    hosts: 
       - '{{ template "frontend.domain" (merge $params $ ) }}'
   {{- end }}
   {{- end }}
