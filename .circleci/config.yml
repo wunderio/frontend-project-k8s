@@ -6,13 +6,13 @@ orbs:
 executors:
   node12:
     docker:
-      - image: eu.gcr.io/silta-images/cicd:circleci-php7.3-node12-composer1-v0.1
+      - image: wunderio/silta-cicd:circleci-php7.3-node12-composer1-v0.1
   node14:
     docker:
-      - image: eu.gcr.io/silta-images/cicd:circleci-php8.0-node14-composer2-v0.1
+      - image: wunderio/silta-cicd:circleci-php8.0-node14-composer2-v0.1
   node16:
     docker:
-      - image: eu.gcr.io/silta-images/cicd:circleci-php8.0-node16-composer2-v0.1
+      - image: wunderio/silta-cicd:circleci-php8.0-node16-composer2-v0.1
 
 jobs:
   validate:

@@ -1,4 +1,4 @@
-FROM eu.gcr.io/silta-images/node:16-alpine-v0.1
+FROM wunderio/silta-node:16-alpine-v0.1
 
 COPY ./hello /app
 
