@@ -25,12 +25,22 @@ services:
       command: |
         echo Postinstall command executed
         ls -Al
-        echo another command
+        echo another command 1
     postupgrade:
       command: |
         echo Postupgrade command executed
         ls -Al
-        echo another command
+        echo another command 2
+    preinstall:
+      command: |
+        echo Preinstall command executed
+        ls -Al
+        echo another command 3
+    preupgrade:
+      command: |
+        echo Preupgrade command executed
+        ls -Al
+        echo another command 4
 
   world:
     exposedRoute: '/world'
