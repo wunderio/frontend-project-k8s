@@ -87,8 +87,7 @@ spec:
                 # Get rid of this.
                 stats="$(grep -E '"elapsed_time_s".*"peak_mem_kb"' ${stats})"
 
-                echo "Debug: serviceName={{ $serviceName }} service.cron={{ $service.cron }} jobName={{ $jobName }}"
-                cron_name="{{ $serviceName }}"
+                cron_name="{{ $serviceName }}:{{ $jobName }}"
 
                 # Assemble the JSON output.
                 cat << JSON
