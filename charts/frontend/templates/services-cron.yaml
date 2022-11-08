@@ -43,13 +43,60 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
-            command: ["/bin/sh", "-c"]
+            command: ["/bin/bash", "-c"]
             args:
               - |
-                 set -ex
-                 echo "starting cron run"
-                 {{ $job.command | nindent 18 }}
-                 echo "cron run completed"
+                # We need to save the executable command(s) into a file,
+                # because the 'time' can exeute only command-files,
+                # not the shell constructs.
+                script="/tmp/cron.$$"
+                cat << CMD > "${script}"
+                #!/bin/bash
+                set -x
+                {{ $job.command | nindent 16 }}
+                CMD
+                chmod 755 "${script}"
+
+                # Try to make the tmp files more unique.
+                # $$ = pid of current running shell.
+                stats="/tmp/stats.$$"
+                output="/tmp/output.$$"
+                output_json="/tmp/output_json.$$"
+
+                # For backwards compatibility.
+                echo "starting cron run"
+
+                # The execution of the actual cron command.
+                # For backwards compatibility reasons sent the output to stdout as well (tee).
+                /usr/bin/time -f '"elapsed_time_s":%e,"peak_mem_kb":%M' -o "${stats}" "${script}" 2>&1 \
+                | tee "${output}"
+
+                # For backwards compatibility.
+                echo "cron run completed"
+
+                # It's tricky to get exit code of a random command from a pipeline.
+                # It is highly shell-dependent.
+                exit_code="${PIPESTATUS[0]}"
+
+                # Convert the command output to json.
+                node -e 'const fs = require("fs"); console.log(JSON.stringify(fs.readFileSync(0, "utf-8")));' < "${output}" > "${output_json}"
+
+                # If the error code is non-zero,
+                # the output file contains also a warning,
+                # which is not json.
+                # Get rid of this.
+                stats="$(grep -E '"elapsed_time_s".*"peak_mem_kb"' ${stats})"
+
+                echo "Debug: serviceName={{ $serviceName }} service.cron={{ $service.cron }} jobName={{ $jobName }}"
+                cron_name="{{ $serviceName }}"
+
+                # Assemble the JSON output.
+                cat << JSON
+                {"cron_name":"${cron_name}",${stats},"exit_code":${exit_code},"output":$(cat "${output_json}")}
+                JSON
+
+                # Use the exit code of the actual cron command.
+                exit "$exit_code"
             resources:
               {{- if $job.resources }}
               {{- if $service.resources }}

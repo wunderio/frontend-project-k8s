@@ -37,7 +37,7 @@ services:
     cron:
       world-cli:
         command: echo $(date) > /app/files/lastupdate.txt
-        schedule: "~ * * * *"
+        schedule: "* * * * *"
     backup:
       command: |
         echo "made in world container" >> /backups/current/world_file
