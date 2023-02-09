@@ -97,6 +97,7 @@ workflows:
               ignore:
                 - production
                 - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
                 - /feature\/aws\/.*/
                 - feature/cert-manager-upgrade
 
@@ -129,7 +130,8 @@ workflows:
           filters:
             branches:
               only: 
-                - feature\/test\/.*/
+                - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
                 - feature/cert-manager-upgrade
 
       - silta/frontend-build-deploy:
@@ -210,6 +212,7 @@ workflows:
               ignore:
                 - production
                 - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
                 - /feature\/aws\/.*/
                 - feature/cert-manager-upgrade
 
