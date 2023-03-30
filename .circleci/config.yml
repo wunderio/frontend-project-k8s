@@ -97,8 +97,9 @@ workflows:
               ignore:
                 - production
                 - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
                 - /feature\/aws\/.*/
-                - feature/cert-manager-upgrade
+                - /feature\/cert-manager-upgrade
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the test cluster deployments
@@ -129,8 +130,9 @@ workflows:
           filters:
             branches:
               only: 
-                - feature\/test\/.*/
-                - feature/cert-manager-upgrade
+                - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
+                - /feature\/cert-manager-upgrade
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the aws cluster deployments
@@ -210,8 +212,9 @@ workflows:
               ignore:
                 - production
                 - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
                 - /feature\/aws\/.*/
-                - feature/cert-manager-upgrade
+                - /feature\/cert-manager-upgrade
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the test cluster deployments
