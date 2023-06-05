@@ -104,7 +104,7 @@ singleSubdomain: false
 
 # These variables are build-specific and should be passed via the --set parameter.
 nginx:
-  image: 'wunderio/silta-nginx:v0.1'
+  image: 'wunderio/silta-nginx:v0.2'
 
   replicas: 1
 
@@ -426,3 +426,20 @@ rabbitmq:
 #   ENV NODE_OPTIONS="--require /usr/local/lib/node_modules/@instana/collector/src/immediate"
 instana:
   enabled: false
+
+# Fastly Signal Sciences support
+# https://docs.fastly.com/signalsciences/
+signalsciences:
+  enabled: false
+  accesskeyid: ""
+  secretaccesskey: ""
+  image: signalsciences/sigsci-agent
+  imageTag: 4.40.0
+  # sidecar container resources
+  resources:
+    requests:
+      cpu: 20m
+      memory: 40Mi
+    limits:
+      cpu: 40m
+      memory: 80Mi
