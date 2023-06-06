@@ -9,6 +9,7 @@ nginx:
     - description: 'Redirect main path to default service (exact match)'
       from: /
       to: /hello
+  image: 'wunderio/silta-nginx:1.23-sigsci-test'
 
 services:
   hello:
@@ -58,3 +59,6 @@ shell:
 silta-release:
   proxy:
     enabled: true
+
+signalsciences:
+  enabled: true
