@@ -104,7 +104,7 @@ singleSubdomain: false
 
 # These variables are build-specific and should be passed via the --set parameter.
 nginx:
-  image: 'wunderio/silta-nginx:v0.1'
+  image: 'wunderio/silta-nginx:v0.2'
 
   replicas: 1
 
