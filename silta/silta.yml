@@ -31,6 +31,12 @@ services:
   world:
     exposedRoute: '/world'
     port: 5000
+    env:
+      secret_TEST:
+        valueFrom:
+          secretKeyRef:
+            name: secret-resource
+            key: somefield
     replicas: 2
     mounts:
       - files
