@@ -210,8 +210,16 @@ spec:
         {{ $mount := (index $.Values.mounts $mountName) }}
         {{- if eq $mount.enabled true }}
         - name: frontend-{{ $mountName }}
+        {{- if hasKey $mount "secretName" }}
+          secret:
+            secretName: {{ $mount.secretName }}
+        {{- else if hasKey $mount "configMapName" }}
+          configMap:
+            name: {{ $mount.configMapName }}
+        {{- else }}
           persistentVolumeClaim:
             claimName: {{ $.Release.Name }}-{{ $mountName }}
+        {{- end }}
         {{- end }}
         {{- end }}
         {{- end }}
