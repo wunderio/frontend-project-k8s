@@ -21,6 +21,8 @@ services:
       tcpSocket:
         port: 4000
       initialDelaySeconds: 30
+    mounts:
+      - test-cm
     postinstall:
       command: |
         echo Postinstall command executed
@@ -34,6 +36,7 @@ services:
     replicas: 2
     mounts:
       - files
+      - test-secret
     cron:
       world-cli:
         command: echo $(date) > /app/files/lastupdate.txt
@@ -51,6 +54,14 @@ mounts:
     mountPath: /app/files
     storageClassName: silta-shared
     csiDriverName: csi-rclone
+  test-secret:
+    enabled: true
+    secretName: test-secret
+    mountPath: /a-secret
+  test-cm:
+    enabled: true
+    configMapName: test-cm
+    mountPath: /a-cm
 
 shell:
   enabled: true
