@@ -174,7 +174,7 @@ data:
 
           location = {{ $service.exposedRoute }}/robots.txt {
             access_log off;
-            {{- if .Values.signalsciences.enabled }}
+            {{- if $.Values.signalsciences.enabled }}
             sigsci_enabled off;
             {{- end }}
           }
