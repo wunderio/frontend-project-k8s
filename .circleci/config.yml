@@ -13,10 +13,13 @@ executors:
   node16:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.0-node16-composer2-v0.2
+  node18:
+    docker:
+      - image: wunderio/silta-cicd:circleci-php8.2-node18-composer2-v0.2
 
 jobs:
   validate:
-    executor: node16
+    executor: node18
     steps:
       - checkout
       - run:
@@ -57,7 +60,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy'
 
-          executor: node16
+          executor: node18
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
@@ -172,7 +175,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy'
 
-          executor: node16
+          executor: node18
           
           # Use a local chart during development. 
           # Don't copy this! We only use following 2 lines for chart development in this repository.
