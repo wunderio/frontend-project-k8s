@@ -14,6 +14,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "name": { "type": "string" },
           "hostname": { "type": "string" },
           "ssl": { 
             "type": "object",
@@ -119,14 +120,14 @@
             "requests": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             },
             "limits": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             }
@@ -155,7 +156,7 @@
             }
           }
         },
-        "security_headers": { "type": "object" },
+        "security_headers": { "type": [ "object", "array" ] },
         "hsts_include_subdomains": { "type": "string" },
         "content_security_policy": { "type": "string" },
         "serverExtraConfig": { "type": "string" },
@@ -163,7 +164,26 @@
         "extraConfig": { "type": "string" },
         "extra_headers": { "type": "object" },
         "extra_conditions": { "type": "string" },
-        "redirects": { "type": "array" }
+        "redirects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" },
+              "type": { "type": "string" }
+            }
+          }
+        },
+        "retry404s": { 
+          "type": ["boolean", "object"],
+          "additionalProperties": false,
+          "properties": {
+            "delay": { "type": "integer" },
+            "paths": { "type": "array" }
+          }
+        }
       }
     },
     "services": { 
@@ -177,7 +197,7 @@
           "port": { "type": "integer" },
           "env": {
             "type": "object",
-            "additionalProperties": { "type": "string" }
+            "additionalProperties": { "type": ["string", "boolean", "integer", "null"] }
           },
           "exposedRoute": { "type": "string" },
           "replicas": { "type": "integer" },
@@ -201,14 +221,14 @@
               "requests": {
                 "type": "object",
                 "properties": {
-                  "cpu": { "type": "string" },
+                  "cpu": { "type": ["integer", "string"]},
                   "memory": { "type": "string" }
                 }
               },
               "limits": {
                 "type": "object",
                 "properties": {
-                  "cpu": { "type": "string" },
+                  "cpu": { "type": ["integer", "string"] },
                   "memory": { "type": "string" }
                 }
               }
@@ -234,6 +254,7 @@
               "type": "object",
               "additionalProperties": false,
               "properties": {
+                "name": { "type": "string" },
                 "command": { "type": "string" },
                 "schedule": { "type": "string" },
                 "parallelism": { "type": "integer" },
@@ -245,14 +266,14 @@
                     "requests": {
                       "type": "object",
                       "properties": {
-                        "cpu": { "type": "string" },
+                        "cpu": { "type": ["integer", "string"] },
                         "memory": { "type": "string" }
                       }
                     },
                     "limits": {
                       "type": "object",
                       "properties": {
-                        "cpu": { "type": "string" },
+                        "cpu": { "type": ["integer", "string"] },
                         "memory": { "type": "string" }
                       }
                     }
@@ -287,14 +308,14 @@
             "requests": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             },
             "limits": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             }
@@ -407,14 +428,14 @@
             "requests": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             },
             "limits": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             }
@@ -453,14 +474,14 @@
             "requests": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             },
             "limits": {
               "type": "object",
               "properties": {
-                "cpu": { "type": "string" },
+                "cpu": { "type": ["integer", "string"] },
                 "memory": { "type": "string" }
               }
             }
