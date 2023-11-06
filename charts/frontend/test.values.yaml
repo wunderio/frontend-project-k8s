@@ -28,6 +28,9 @@ shell:
 elasticsearch:
   enabled: true
 
+matomo:
+  enabled: true
+
 mongodb:
   enabled: true
 

@@ -367,6 +367,11 @@ mariadb:
               - static-ip
   enableServiceLinks: false
 
+matomo:
+  enabled: false
+  # For more options, see:
+  # https://github.com/bitnami/charts/tree/main/bitnami/matomo#matomo-parameters
+
 elasticsearch:
   enabled: false
 

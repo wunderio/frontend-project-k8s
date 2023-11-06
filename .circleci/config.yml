@@ -45,7 +45,7 @@ commands:
     steps:
       - run:
           name: Validate site url <<parameters.site_url>>
-          command: |          
+          command: |
             curl -u $SITE_TEST_BAUTH <<parameters.site_url>>
 
 workflows:
@@ -61,12 +61,12 @@ workflows:
           name: 'Build & deploy'
 
           executor: node18
-          
-          # Use a local chart during development. 
+
+          # Use a local chart during development.
           # Don't copy this! We only use following 2 lines for chart development in this repository.
           chart_name: './charts/frontend'
           chart_repository: ''
-          
+
           codebase-build:
             # - silta/npm-install-build:
             #     build-command: ''
@@ -111,9 +111,9 @@ workflows:
           context: silta_aks
           filters:
             branches:
-              only: 
+              only:
                 - master
-      
+
       - site-test:
           name: 'Site test'
           requires:
@@ -121,7 +121,7 @@ workflows:
             - 'Build & deploy master to aks cluster'
           filters:
             branches:
-              only: 
+              only:
                 - master
 
       - silta/frontend-build-deploy:
@@ -132,7 +132,7 @@ workflows:
           context: silta_test
           filters:
             branches:
-              only: 
+              only:
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
                 - /feature\/cert-manager-upgrade
@@ -145,7 +145,7 @@ workflows:
           context: silta_aws
           filters:
             branches:
-              only: 
+              only:
                 - /feature\/aws\/.*/
 
       - silta/frontend-build-deploy:
@@ -153,7 +153,7 @@ workflows:
           <<: *build-deploy
           name: 'Build & deploy production'
           silta_config: silta/silta.yml,silta/silta-prod.yml
-          context: silta_finland    
+          context: silta_finland
           filters:
             branches:
               only: production
@@ -169,19 +169,19 @@ workflows:
     jobs:
       - validate:
           name: 'Validate frontend chart'
-      
+
       - silta/frontend-build-deploy: &build-deploy
           requires:
             - 'Validate frontend chart'
           name: 'Build & deploy'
 
           executor: node18
-          
-          # Use a local chart during development. 
+
+          # Use a local chart during development.
           # Don't copy this! We only use following 2 lines for chart development in this repository.
           chart_name: './charts/frontend'
           chart_repository: ''
-          
+
           codebase-build:
             # - silta/npm-install-build:
             #     build-command: ''
@@ -226,9 +226,9 @@ workflows:
           context: silta_aks
           filters:
             branches:
-              only: 
+              only:
                 - master
-      
+
       - site-test:
           name: 'Site test'
           requires:
@@ -236,5 +236,5 @@ workflows:
             - 'Build & deploy master to aks cluster'
           filters:
             branches:
-              only: 
+              only:
                 - master
