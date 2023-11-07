@@ -5,6 +5,9 @@ dependencies:
 - name: elasticsearch
   repository: file://../elasticsearch
   version: 8.5.1
+- name: matomo
+  repository: file://../matomo
+  version: 3.0.2
 - name: rabbitmq
   repository: https://storage.googleapis.com/charts.wdr.io
   version: 6.17.5
@@ -14,5 +17,5 @@ dependencies:
 - name: silta-release
   repository: file://../silta-release
   version: 1.0.0
-digest: sha256:7b090077d70021edfb2479e8efaa4079246a09c3d9fb7d1ae56a93ae37240d82
-generated: "2023-10-03T12:01:47.209153798+03:00"
+digest: sha256:3da7c748aebed689f10c00746ec084bcbdf69186cce623dd4b8064cca65d2b73
+generated: "2023-11-06T16:23:34.477868+02:00"
