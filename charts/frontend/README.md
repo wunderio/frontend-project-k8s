@@ -16,10 +16,12 @@ Service containers have following environment variables:
   - When RabbitMQ is enabled:
     - RABBITMQ_HOST: RabbitMQ server host.
   - When MariaDB is enabled:
-      - DB_HOST: Database server host. 
+      - DB_HOST: Database server host.
       - DB_USER: Database username. Uses silta.yml `mariadb.db.user`, default value provided by build process.
       - DB_PASS: Database password. Uses silta.yml `mariadb.db.password` default value provided by build process
       - DB_NAME: Database name. Set to "frontend" by default.
+  - When Matomo is enabled:
+    - MATOMO_HOST: Matomo server host.
   - When MongoDB is enabled:
     - MONGODB_HOST: MongoDB server host.
   - When Instana is enabled:

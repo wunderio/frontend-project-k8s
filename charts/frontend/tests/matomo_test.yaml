@@ -1,0 +1,16 @@
+suite: Matomo
+templates:
+  - services-deployment.yaml
+tests:
+  - it: gets exposed when enabled
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+      matomo.enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MATOMO_HOST
+            value: RELEASE-NAME-matomo
