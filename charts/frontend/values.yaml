@@ -368,9 +368,81 @@ mariadb:
   enableServiceLinks: false
 
 matomo:
-  enabled: false
-  # For more options, see:
+  # For more Matomo options, see:
   # https://github.com/bitnami/charts/tree/main/bitnami/matomo#matomo-parameters
+  enabled: false
+  image:
+    tag: 4.15.1-debian-11-r63
+  replicaCount: 1
+
+  volumeClaimTemplate:
+    resources:
+      requests:
+        storage: 1Gi
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 512Mi
+
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+          - key: cloud.google.com/gke-nodepool
+            operator: NotIn
+            values:
+            - static-ip
+
+  #
+  # Matomo needs access to a MariaDB database.
+  #
+  # That can be either
+  # 1. an external database (such as the one in this chart), or
+  # 2. an internal sidecar service controlled by Matomo.
+  #
+  # NOTE: By default, both options are disabled.
+  #
+
+  # 1. To store analytics data in an external database, fill in these settings:
+  # externalDatabase:
+  #   database: frontend
+  #   existingSecret: ""
+  #   host: "RELEASE-NAME-mariadb"
+  #   password: ""
+  #   port: 3306
+  #   user: frontend
+
+  #   ----- OR -----
+
+  # 2. To store analytics data in the Matomo internal MariaDB sidecar:
+  mariadb:
+    enabled: false
+    # primary:
+    #   affinity:
+    #     nodeAffinity:
+    #       preferredDuringSchedulingIgnoredDuringExecution:
+    #       - weight: 100
+    #         preference:
+    #           matchExpressions:
+    #           - key: cloud.google.com/gke-nodepool
+    #             operator: NotIn
+    #             values:
+    #             - static-ip
+    #   persistence:
+    #     # Database storage disk space allocation
+    #     # Request assistance from ops team after changing this on existing deployment.
+    #     size: 1G
+    #   resources:
+    #     requests:
+    #       cpu: 25m
+    #       memory: 366Mi
+    #     limits:
+    #       memory: 488Mi
 
 elasticsearch:
   enabled: false
