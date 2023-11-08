@@ -92,7 +92,10 @@ workflows:
                 name: Add bitnami repo for matomo
                 command: helm repo add bitnami https://charts.bitnami.com/bitnami
             - run:
-                name: Build local helm dependencies
+                name: Build local helm dependencies (matomo)
+                command: helm dependency build ./charts/matomo
+            - run:
+                name: Build local helm dependencies (frontend)
                 command: helm dependency build ./charts/frontend
             - run:
                 name: Dry-run helm install
