@@ -90,7 +90,7 @@ workflows:
                 command: helm repo add elastic https://helm.elastic.co
             - run:
                 name: Add bitnami repo for matomo
-                command: helm repo add bitnami https://charts.bitnami.com/bitnami
+                command: helm repo add bitnami https://charts.bitnami.com/bitnami/
             - run:
                 name: Build local helm dependencies (matomo)
                 command: helm dependency build ./charts/matomo
