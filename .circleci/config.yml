@@ -86,11 +86,11 @@ workflows:
                 path: '.'
                 identifier: 'world'
             - run:
-                name: Add elastic repo for elasticsearch
-                command: helm repo add elastic https://helm.elastic.co
-            - run:
-                name: Build local helm dependencies
-                command: helm dependency build ./charts/frontend
+                name: Add helm repositories and build local chart
+                command: |
+                  helm repo add elastic https://helm.elastic.co
+                  helm repo add codecentric https://codecentric.github.io/helm-charts
+                  helm dependency build ./charts/frontend
             - run:
                 name: Dry-run helm install
                 command: helm install --dry-run --generate-name ./charts/frontend --values charts/frontend/test.values.yaml
@@ -201,11 +201,11 @@ workflows:
                 path: '.'
                 identifier: 'world'
             - run:
-                name: Add elastic repo for elasticsearch
-                command: helm repo add elastic https://helm.elastic.co
-            - run:
-                name: Build local helm dependencies
-                command: helm dependency build ./charts/frontend
+                name: Add helm repositories and build local chart
+                command: |
+                  helm repo add elastic https://helm.elastic.co
+                  helm repo add codecentric https://codecentric.github.io/helm-charts
+                  helm dependency build ./charts/frontend
             - run:
                 name: Dry-run helm install
                 command: helm install --dry-run --generate-name ./charts/frontend --values charts/frontend/test.values.yaml
