@@ -146,15 +146,11 @@ rsync -az /values_mounts/ /backups/current/
       fieldPath: status.hostIP
 {{- end }}
 {{- if .Values.mailhog.enabled }}
-{{- if .Values.mailhog.enabled }}
 {{- if contains "mailhog" .Release.Name -}}
 {{- fail "Do not use 'mailhog' in release name or deployment will fail" -}}
 {{- end }}
-{{- end }}
-{{- if .Values.mailhog.enabled }}
 - name: MAILHOG_ADDRESS
   value: "{{ .Release.Name }}-mailhog:1025"
-{{- end }}
 {{- end }}
 {{- end }}
 
