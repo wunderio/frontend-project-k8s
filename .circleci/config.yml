@@ -78,10 +78,6 @@ workflows:
                 build-command: ''
           image_build_steps:
             - silta/build-docker-image:
-                dockerfile: 'silta/node.Dockerfile'
-                path: '.'
-                identifier: 'node'
-            - silta/build-docker-image:
                 dockerfile: 'silta/hello.Dockerfile'
                 path: '.'
                 identifier: 'hello'
