@@ -11,6 +11,19 @@ nginx:
       to: /hello
 
 services:
+
+  node:
+    exposedRoute: '/'
+    port: 4000
+    env:
+      APP_ENV: 'dev'
+    # postinstall:
+    #   command: |
+    #     echo Postinstall command executed
+    postupgrade:
+      command: |
+        echo "no"
+    
   hello:
     exposedRoute: '/hello'
     port: 4000
@@ -21,9 +34,9 @@ services:
       tcpSocket:
         port: 4000
       initialDelaySeconds: 30
-    postinstall:
-      command: |
-        echo Postinstall command executed
+    # postinstall:
+    #   command: |
+    #     echo Postinstall command executed
     postupgrade:
       command: |
         echo Postupgrade command executed
