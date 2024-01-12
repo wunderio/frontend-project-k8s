@@ -88,6 +88,8 @@ cluster:
   type: gke
   vpcNative: false
 
+timezone: ""
+
 # backendConfig customizations for main service
 backendConfig:
   securityPolicy:
