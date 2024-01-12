@@ -378,6 +378,86 @@ mariadb:
               - static-ip
   enableServiceLinks: false
 
+varnish:
+  enabled: false
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+  image: wunderio/silta-varnish
+  # TODO: change to 7-v1
+  imageTag: 7-test
+  imagePullPolicy: IfNotPresent
+  # https://varnish-cache.org/docs/7.4/reference/varnishd.html#storage-backend
+  storageBackend: 'file,/var/lib/varnish/varnish_storage.bin,512M'
+  # https://varnish-cache.org/docs/7.4/reference/varnishd.html#list-of-parameters
+  extraParams: ""
+  # Custom caching code for vcl_recv subroutine.
+  vcl_recv: |
+    # Deny special pages to bots
+    if (req.url ~ "^/(?:user|admin|cart|checkout|logout|abuse|flag|.*\?rate=)" && req.http.user-agent ~ "(?:crawl|goog|yahoo|spider|bot|Yandex|bing|tracker|click|parser|ltx71|urllib)") {
+      return (synth( 403, "Forbidden"));
+    }
+    # Force a lookup with static file requests, even when cookies are present
+    if (req.url ~ "\.(png|gif|jpg|tif|tiff|ico|webp|swf|css|js|pdf|doc|xls|ppt|zip)(\?.*)?$") {
+      return (hash);
+    }
+    # Do not cache requests with Cookie header
+    if (req.http.Cookie) {
+      return (pass);
+    }
+  
+  # Custom caching code for vcl_backend_response subroutine.
+  vcl_backend_response: |
+    # If page cache is enabled, it will send a X-Cache header, and for anonymous "Cache-Control: public, max-age=x."-headers.
+    # In those cases, Varnish normally  uses the max-age value directly for do determine how long it is cached (ttl).
+    # We can set the TTL for all content to 12h. Lets do it only if Varnish already thinks it is cacheable, and not a page-cache-item.
+    if(beresp.status == 200 && beresp.ttl > 0s && !beresp.http.X-Cache){
+      # Default TTL for all content is 10m
+      set beresp.ttl = 10m;
+      set beresp.http.x-ttl = "10m";
+    }
+
+    if (bereq.url ~ "^[^?]*\.(jpg|jpeg|gif|png|svg|ico|webp|css|js|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|flv|swf|html|htm|otf)(\?.*)?$") {
+      # Strip any cookies before static files are inserted into cache.
+      unset beresp.http.set-cookie;
+      if(beresp.status == 200){
+        set beresp.ttl = 7d;
+        set beresp.http.isstatic = "1";
+      } else{
+        # Dont cache broken images etc for more than 30s, and not at all clientside.
+        set beresp.ttl = 30s;
+        set beresp.http.Cache-control = "max-age=0, must-revalidate";
+      }
+    }
+
+    # Large static files are delivered directly to the end-user without waiting for Varnish to fully read the file first.
+    if (bereq.url ~ "^[^?]*\.(mp[34]|rar|tar|tgz|gz|pdf|wav|zip|bz2|xz|7z|avi|mov|ogm|mpe?g|mk[av]|webm)(\?.*)?$") {
+      unset beresp.http.set-cookie;
+      set beresp.do_stream = true;
+      set beresp.do_gzip = false;
+    }
+
+  # Custom html code for 50x pages and backend failures.
+  status_500_html: ""
+  # https://varnish-cache.org/docs/7.4/reference/vcl-backend.html
+  backend_config: |
+    .max_connections = 300;
+    .probe = {
+      .request =
+          "HEAD / HTTP/1.1"
+          "User-Agent: Varnish"
+          "Connection: close"
+          "Host: localhost";
+      .interval  = 5s;
+      .timeout   = 5s;
+      .window    = 5;
+      .threshold = 3;
+    }
+    .first_byte_timeout     = 300s;
+    .connect_timeout        = 10s;
+    .between_bytes_timeout  = 10s;
+
 elasticsearch:
   enabled: false
 

@@ -7,6 +7,9 @@
 nginx:
   redirects:
     - description: 'Redirect main path to default service (exact match)'
+      from: ""
+      to: /hello
+    - description: 'Redirect main path to default service (exact match)'
       from: /
       to: /hello
 
@@ -58,3 +61,6 @@ shell:
 silta-release:
   proxy:
     enabled: true
+
+varnish:
+  enabled: true
