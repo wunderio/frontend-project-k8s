@@ -385,8 +385,7 @@ varnish:
       cpu: 25m
       memory: 32Mi
   image: wunderio/silta-varnish
-  # TODO: change to 7-v1
-  imageTag: 7-test
+  imageTag: 7-v1
   imagePullPolicy: IfNotPresent
   # https://varnish-cache.org/docs/7.4/reference/varnishd.html#storage-backend
   storageBackend: 'file,/var/lib/varnish/varnish_storage.bin,512M'
