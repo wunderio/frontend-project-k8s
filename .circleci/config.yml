@@ -58,7 +58,7 @@ workflows:
       - silta/frontend-build-deploy: &build-deploy
           requires:
             - 'Validate frontend chart'
-          name: 'Build & deploy'
+          name: 'Build & deploy master'
 
           executor: node18
           
@@ -97,8 +97,32 @@ workflows:
           context: silta_dev
           filters:
             branches:
+              only:
+                - master
+
+      - approval:
+          type: approval
+          name: "Deployment approval"
+          filters:
+            branches:
               ignore:
                 - production
+                - master
+                - /feature\/test\/.*/
+                - /feature\/test-cluster\/.*/
+                - /feature\/aws\/.*/
+                - /feature\/cert-manager-upgrade
+
+      - silta/frontend-build-deploy:
+          <<: *build-deploy
+          name: 'Build & deploy feature branch'
+          requires:
+            - "Deployment approval"
+          filters:
+            branches:
+              ignore:
+                - production
+                - master
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
                 - /feature\/aws\/.*/
@@ -117,7 +141,7 @@ workflows:
       - site-test:
           name: 'Site test'
           requires:
-            - 'Build & deploy'
+            - 'Build & deploy master'
             - 'Build & deploy master to aks cluster'
           filters:
             branches:
@@ -173,7 +197,7 @@ workflows:
       - silta/frontend-build-deploy: &build-deploy
           requires:
             - 'Validate frontend chart'
-          name: 'Build & deploy'
+          name: 'Build & deploy master'
 
           executor: node18
           
@@ -232,7 +256,7 @@ workflows:
       - site-test:
           name: 'Site test'
           requires:
-            - 'Build & deploy'
+            - 'Build & deploy master'
             - 'Build & deploy master to aks cluster'
           filters:
             branches:
