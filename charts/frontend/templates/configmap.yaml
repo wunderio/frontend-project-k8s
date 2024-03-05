@@ -200,9 +200,9 @@ data:
       {{- if $service.exposedRoute }}
       location {{ $service.exposedRoute }} {
 
-        {{- if ne .Values.nginx.x_proxy_auth "" }}
+        {{- if ne $.Values.nginx.x_proxy_auth "" }}
         # Verify if x_proxy_auth value is correct
-        if ( $http_x_proxy_auth != '{{ .Values.nginx.x_proxy_auth }}') { return 403; }
+        if ( $http_x_proxy_auth != '{{ $.Values.nginx.x_proxy_auth }}') { return 403; }
         {{- end}}
 
         {{- if $.Values.nginx.extra_conditions }}
