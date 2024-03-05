@@ -64,3 +64,8 @@ silta-release:
 
 varnish:
   enabled: true
+
+mongodb:
+  enabled: true
+  # image:
+  #   tag: 5.0.3
