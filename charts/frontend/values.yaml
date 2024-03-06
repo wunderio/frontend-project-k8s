@@ -484,8 +484,9 @@ mongodb:
     tag: 7.0.6-debian-12-r0
   updateStrategy:
     type: Recreate
-
-
+  initdbScripts:
+    setFeatureCompatibilityVersion.js: |
+      db.adminCommand({ setFeatureCompatibilityVersion: "7.0", confirm: true);
   # Use a low default to prevent unnecessary storage use.
   persistence:
     size: 1Gi
