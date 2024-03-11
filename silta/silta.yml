@@ -67,9 +67,3 @@ varnish:
 
 mongodb:
   enabled: true
-  # image:
-  #   tag: 6.0.13-debian-11-r21
-  # initdbScripts:
-  #   setFeatureCompatibilityVersion.js: |
-  #     db.adminCommand({ setFeatureCompatibilityVersion: "7.0");
-  
