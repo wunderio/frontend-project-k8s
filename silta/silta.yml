@@ -64,3 +64,6 @@ silta-release:
 
 varnish:
   enabled: true
+
+mongodb:
+  enabled: true
