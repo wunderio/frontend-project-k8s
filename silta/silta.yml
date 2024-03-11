@@ -4,7 +4,12 @@
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
 # for all possible options.
 
+exposeDomains:
+  dk8s:
+    hostname: frontend-k8s-staging.fastly.wdr.io
+
 nginx:
+  x_proxy_auth: "testing123"
   redirects:
     - description: 'Redirect main path to default service (exact match)'
       from: ""
