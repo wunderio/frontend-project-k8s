@@ -68,4 +68,4 @@ silta-release:
     enabled: true
 
 varnish:
-  enabled: true
+  enabled: false
