@@ -1,4 +1,4 @@
-suite: drupal redis
+suite: frontend redis
 templates:
   - services-deployment.yaml
   - configmap.yaml
@@ -6,9 +6,10 @@ capabilities:
   apiVersions:
     - pxc.percona.com/v1
 tests:
-  - it: sets redis hostname in drupal environment if redis is enabled
+  - it: sets redis hostname in environment if redis is enabled
     template: services-deployment.yaml
     set:
+      services.node.enabled: true
       redis:
         enabled: true
         auth:
@@ -23,6 +24,7 @@ tests:
   - it: sets no redis hostname in frontend environment if redis is disabled
     template: services-deployment.yaml
     set:
+      services.node.enabled: true
       redis.enabled: false
     asserts:
       - notContains:
