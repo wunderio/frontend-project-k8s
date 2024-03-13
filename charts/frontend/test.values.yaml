@@ -41,7 +41,7 @@ rabbitmq:
 redis:
   enabled: true
   auth:
-    password: foo
+    password: "foo"
 
 
 mounts:
