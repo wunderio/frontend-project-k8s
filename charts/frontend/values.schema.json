@@ -203,6 +203,13 @@
           "exposedRoute": { "type": "string" },
           "replicas": { "type": "integer" },
           "mounts": { "type": "array" },
+          "lifecycle": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "preStop": { "type": "object" }
+            }
+          },
           "readinessProbe": { "type": "object" },
           "livenessProbe": { "type": "object" },
           "strategy": { "type": "object" },

@@ -24,6 +24,13 @@ services:
       tcpSocket:
         port: 4000
       initialDelaySeconds: 30
+    # Overridden lifecycle hook.
+    lifecycle:
+      preStop:
+        exec:
+          command: |
+            echo "Hello container is shutting down"
+            /bin/sleep 5
     postinstall:
       command: |
         echo Postinstall command executed
