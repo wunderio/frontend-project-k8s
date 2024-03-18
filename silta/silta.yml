@@ -26,6 +26,10 @@ services:
       initialDelaySeconds: 30
     # Overridden lifecycle hook.
     lifecycle:
+      postStart:
+        exec:
+          command: |
+            echo "Hello container is starting"
       preStop:
         exec:
           command: |
