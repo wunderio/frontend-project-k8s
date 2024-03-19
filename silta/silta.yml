@@ -1,4 +1,3 @@
-
 # Values in this file override the default values of our helm chart.
 #
 # See https://github.com/wunderio/charts/blob/master/frontend/values.yaml
@@ -28,13 +27,13 @@ services:
     lifecycle:
       postStart:
         exec:
-          command: |
-            echo "Hello container is starting"
+          command:
+            - echo "Hello container is starting"
       preStop:
         exec:
-          command: |
-            echo "Hello container is shutting down"
-            /bin/sleep 5
+          command:
+            - echo "Hello container is shutting down"
+            - /bin/sleep 5
     postinstall:
       command: |
         echo Postinstall command executed
