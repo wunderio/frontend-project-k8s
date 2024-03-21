@@ -64,3 +64,8 @@ silta-release:
 
 varnish:
   enabled: true
+
+redis:
+  enabled: false
+  auth:
+    password: "foo"
