@@ -68,6 +68,22 @@ set -e
 rsync -az /values_mounts/ /backups/current/
 {{- end }}
 
+{{- define "frontend.backup.elasticsearch" -}}
+set -e
+if ! command -v multielasticdump &> /dev/null
+then
+  echo "multielasticdump could not be found. Elasticsearch backup failed."
+  exit 1
+fi
+# Dump elasticsearch data
+echo "Starting Elasticsearch backup."
+mkdir /tmp/elasticsearch
+multielasticdump --direction=dump --input=http://${ELASTICSEARCH_HOST}:9200/ --output=/tmp/elasticsearch
+tar -czf /tmp/elasticsearch.tar.gz -C /tmp/elasticsearch .
+cp /tmp/elasticsearch.tar.gz /backups/current/
+echo "Elasticsearch backup complete."
+{{- end }}
+
 {{- define "services.env" }}
 {{- $service := .service -}}
 - name: 'PORT'

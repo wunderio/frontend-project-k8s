@@ -26,7 +26,7 @@ spec:
           enableServiceLinks: false
           initContainers:
             - name: backup-linking
-              image: wunderio/silta-rsync:v1
+              image: wunderio/silta-backup:v1
               command: ["/bin/bash", "-c"]
               args:
                 - |
@@ -44,7 +44,7 @@ spec:
                   name: shared-data
           containers:
           - name: backup
-            image: wunderio/silta-rsync:v1
+            image: wunderio/silta-backup:v1
             volumeMounts:
               {{- range $index, $mount := $.Values.mounts -}}
               {{- if eq $mount.enabled true }}
@@ -61,6 +61,10 @@ spec:
               - |
                 {{- include "frontend.backup.copy-mounts" . | nindent 16 }}
 
+                {{- if and .Values.elasticsearch.enabled .Values.backup.elasticsearch }}
+                {{- include "frontend.backup.elasticsearch" . | nindent 16 }}
+                {{- end }}
+                
                 # Delete old backups
                 echo "Removing backups older than {{ .Values.backup.retention }} days"
 

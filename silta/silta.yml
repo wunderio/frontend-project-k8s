@@ -80,3 +80,15 @@ redis:
     
 mongodb:
   enabled: true
+
+elasticsearch:
+  enabled: true
+
+backup:
+  enabled: true
+  retention: 3
+  # schedule: "*/10 * * * *"
+
+# TODO: wait backup tools image release https://github.com/wunderio/silta-images/pull/182
+# TODO: test / verify backup cron job
+# TODO: remove test values
