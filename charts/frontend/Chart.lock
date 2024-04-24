@@ -12,8 +12,8 @@ dependencies:
   repository: https://storage.googleapis.com/charts.wdr.io
   version: 6.17.5
 - name: mongodb
-  repository: https://storage.googleapis.com/charts.wdr.io
-  version: 10.26.4
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 14.12.3
 - name: postgresql
   repository: https://storage.googleapis.com/charts.wdr.io
   version: 13.2.24
@@ -22,6 +22,6 @@ dependencies:
   version: 1.0.0
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 18.19.2
-digest: sha256:d30ca54c5789b9a601e7a2c30c8882e5c21475e0c0da58bf79daab978d82244f
-generated: "2024-03-13T14:19:26.173094653+01:00"
+  version: 18.19.4
+digest: sha256:260dbf74bcb76f7b4a6cfdf4efc68afd6631c1ccc8679f0cd070625b30599073
+generated: "2024-04-24T13:28:57.413453012+03:00"

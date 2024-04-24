@@ -69,3 +69,6 @@ redis:
   enabled: false
   auth:
     password: "foo"
+    
+mongodb:
+  enabled: true
