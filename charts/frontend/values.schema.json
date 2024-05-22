@@ -9,14 +9,14 @@
     "imagePullSecrets": { "type": "array" },
     "app": { "type": "string" },
     "exposeDomains": {
-      "type": "object", 
+      "type": "object",
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "hostname": { "type": "string" },
-          "ssl": { 
+          "ssl": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -49,9 +49,9 @@
         "ingress": { "type": "string" }
       }
     },
-    "domainPrefixes": { 
-      "type": "array", 
-      "items": { 
+    "domainPrefixes": {
+      "type": "array",
+      "items": {
         "type": "string"
       }
     },
@@ -68,7 +68,7 @@
       }
     },
     "backendConfig": {
-      "type": [ "array", "object" ], 
+      "type": [ "array", "object" ],
       "items": { "type": "object" }
     },
     "ingress": {
@@ -177,7 +177,7 @@
             }
           }
         },
-        "retry404s": { 
+        "retry404s": {
           "type": ["boolean", "object"],
           "additionalProperties": false,
           "properties": {
@@ -187,7 +187,7 @@
         }
       }
     },
-    "services": { 
+    "services": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
@@ -331,7 +331,7 @@
             }
           }
         },
-        "strategy": { 
+        "strategy": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -380,7 +380,7 @@
         }
       }
     },
-    "shell": { 
+    "shell": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -390,7 +390,7 @@
           "additionalProperties": false,
           "properties": {
             "apiToken": { "type": "string" },
-            "keyserver": { 
+            "keyserver": {
               "type": "object",
               "additionalProperties": false,
               "properties": {

@@ -64,7 +64,7 @@ ingress:
     redirect-https: true
     extraAnnotations:
       traefik.ingress.kubernetes.io/rate-limit: |
-        extractorfunc: request.host
+        extractorfunc: client.ip
         rateset:
           default:
             period: 5s
@@ -522,14 +522,14 @@ signalsciences:
   accesskeyid: ""
   secretaccesskey: ""
   image: signalsciences/sigsci-agent
-  imageTag: 4.40.0
+  imageTag: latest
   # sidecar container resources
   resources:
     requests:
       cpu: 20m
       memory: 40Mi
     limits:
-      cpu: 40m
+      cpu: 200m
       memory: 300Mi
 
 # Mailhog service overrides
