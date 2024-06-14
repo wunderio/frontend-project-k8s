@@ -16,15 +16,18 @@ executors:
   node18:
     docker:
       - image: wunderio/silta-cicd:circleci-php8.2-node18-composer2-v1
+  node20:
+    docker:
+      - image: wunderio/silta-cicd:circleci-php8.2-node20-composer2-helm-unittest-upgrade-test20240614
 
 jobs:
   validate:
-    executor: node18
+    executor: node20
     steps:
       - checkout
       - run:
           name: Helm unit tests
-          command: helm unittest ./charts/frontend --helm3
+          command: helm unittest ./charts/frontend
       # - run:
       #     name: Helm lint
       #     command: helm lint ./charts/frontend
@@ -60,7 +63,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy master'
 
-          executor: node18
+          executor: node20
 
           # Use a local chart during development.
           # Don't copy this! We only use following 2 lines for chart development in this repository.
@@ -201,7 +204,7 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy master'
 
-          executor: node18
+          executor: node20
 
           # Use a local chart during development.
           # Don't copy this! We only use following 2 lines for chart development in this repository.
