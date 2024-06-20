@@ -267,7 +267,7 @@ services: {}
   #  nginx:
   #    denyDotFiles: true
   #    locationExtraConfig: |
-  #      # Custom nginx for location block of this service
+  #      # Extra nginx configuration snippet for this service location block.
 
 
 # Configure the dynamically mounted volumes
