@@ -15,6 +15,8 @@ nginx:
 
 services:
   hello:
+    nginx:
+      denyDotFiles: false
     exposedRoute: '/hello'
     port: 4000
     env:
@@ -40,6 +42,9 @@ services:
         echo Postupgrade command executed
 
   world:
+    nginx:
+      locationExtraConfig: |
+        add_header X-Rade-Test "oujea" always;
     exposedRoute: '/world'
     port: 5000
     replicas: 2
@@ -77,6 +82,6 @@ redis:
   enabled: false
   auth:
     password: "foo"
-    
+
 mongodb:
   enabled: true
