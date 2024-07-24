@@ -242,9 +242,8 @@ data:
         location = {{ $service.exposedRoute }}/apple-touch-icon.png { access_log off; log_not_found off; }
         location = {{ $service.exposedRoute }}/apple-touch-icon-precomposed.png { access_log off; log_not_found off; }
 
-        ## Rather than just denying .ht* in the config, why not deny
-        ## access to all .invisible files
         {{- if (mergeOverwrite (deepCopy $.Values.serviceDefaults.nginx) ($service.nginx)).denyDotFiles }}
+        ## Deny access to all .invisible files and turn off logging
         location ~ /\. { return 404; access_log off; log_not_found off; }
         {{- end }}
 
