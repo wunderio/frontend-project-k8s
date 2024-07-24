@@ -244,7 +244,7 @@ data:
 
         ## Rather than just denying .ht* in the config, why not deny
         ## access to all .invisible files
-        {{- if (mergeOverwrite $.Values.serviceDefaults.nginx ($service.nginx)).denyDotFiles }}
+        {{- if (mergeOverwrite (deepCopy $.Values.serviceDefaults.nginx) ($service.nginx)).denyDotFiles }}
         location ~ /\. { return 404; access_log off; log_not_found off; }
         {{- end }}
 
