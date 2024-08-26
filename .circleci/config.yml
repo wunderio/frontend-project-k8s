@@ -27,7 +27,7 @@ jobs:
       - checkout
       - run:
           name: Helm unit tests
-          command: helm unittest ./charts/frontend --helm3
+          command: helm unittest ./charts/frontend
       # - run:
       #     name: Helm lint
       #     command: helm lint ./charts/frontend
