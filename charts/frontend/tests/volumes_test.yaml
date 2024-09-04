@@ -22,7 +22,7 @@ tests:
           path: spec.resources.requests.storage
           value: 123Gi
   
-  - it: backup pv creation when provisioner is unavailable
+  - it: backup pv creation when csi-rclone provisioner is unavailable
     template: backup-volume.yaml
     set:
       backup:
@@ -53,7 +53,7 @@ tests:
         equal:
           path: spec.selector.matchLabels.name
           value: RELEASE-NAME-b6b6854-backup
-  - it: backup pv creation when provisioner is available
+  - it: backup pv creation when csi-rclone provisioner is available (silta-shared storage class)
     template: backup-volume.yaml
     capabilities:
       apiVersions:
@@ -75,7 +75,29 @@ tests:
       - documentIndex: 0
         notExists:
           path: spec.selector
-  - it: shell key pv creation when provisioner is not available
+  - it: backup pv creation when csi-rclone provisioner is available (non-silta-shared storage class)
+    template: backup-volume.yaml
+    capabilities:
+      apiVersions:
+        - silta.wdr.io/v1
+    set:
+      backup:
+        enabled: true
+        storage: 123Gi
+        storageClassName: foo
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: kind
+          value: PersistentVolumeClaim
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: RELEASE-NAME-backup
+      - documentIndex: 0
+        notExists:
+          path: spec.selector
+  - it: shell key pv creation when csi-rclone provisioner is not available
     template: volumes.yaml
     set:
       shell:
@@ -106,7 +128,7 @@ tests:
         equal:
           path: spec.selector.matchLabels.name
           value: RELEASE-NAME-b6b6854-shell-keys
-  - it: shell key pv creation when provisioner is available
+  - it: shell key pv creation when csi-rclone provisioner is available (silta-shared storage class)
     template: volumes.yaml
     capabilities:
       apiVersions:
@@ -128,7 +150,29 @@ tests:
       - documentIndex: 0
         notExists:
           path: spec.selector
-  - it: custom mount pv creation when provisioner is not available
+  - it: shell key pv creation when csi-rclone provisioner is available (non-silta-shared storage class)
+    template: volumes.yaml
+    capabilities:
+      apiVersions:
+        - silta.wdr.io/v1
+    set:
+      shell:
+        enabled: true
+        mount:
+          storageClassName: foo
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: kind
+          value: PersistentVolumeClaim
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: RELEASE-NAME-shell-keys
+      - documentIndex: 0
+        notExists:
+          path: spec.selector
+  - it: custom mount pv creation when csi-rclone provisioner is not available
     template: volumes.yaml
     set:
       mounts:
@@ -159,7 +203,7 @@ tests:
         equal:
           path: spec.selector.matchLabels.name
           value: RELEASE-NAME-b6b6854-foo
-  - it: custom mount pv creation when provisioner is available
+  - it: custom mount pv creation when csi-rclone provisioner is available (silta-shared storage class)
     template: volumes.yaml
     capabilities:
       apiVersions:
@@ -178,6 +222,28 @@ tests:
         equal:
           path: metadata.name
           value: RELEASE-NAME-foo2
+      - documentIndex: 0
+        notExists:
+          path: spec.selector
+  - it: custom mount pv creation when csi-rclone provisioner is available (non-silta-shared storage class)
+    template: volumes.yaml
+    capabilities:
+      apiVersions:
+        - silta.wdr.io/v1
+    set:
+      mounts:
+        foo:
+          enabled: true
+          storageClassName: foo
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: kind
+          value: PersistentVolumeClaim
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: RELEASE-NAME-foo
       - documentIndex: 0
         notExists:
           path: spec.selector
