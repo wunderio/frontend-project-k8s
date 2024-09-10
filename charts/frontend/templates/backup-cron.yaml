@@ -59,7 +59,15 @@ spec:
             command: ["/bin/bash", "-c"]
             args:
               - |
+                {{- $mounts_enabled := false }}
+                {{- range $index, $mount := $.Values.mounts }}
+                {{- if eq $mount.enabled true }}
+                {{- $mounts_enabled = true }}
+                {{- end }}
+                {{- end }}
+                {{- if eq $mounts_enabled true }}
                 {{- include "frontend.backup.copy-mounts" . | nindent 16 }}
+                {{- end }}
 
                 # Delete old backups
                 echo "Removing backups older than {{ .Values.backup.retention }} days"
