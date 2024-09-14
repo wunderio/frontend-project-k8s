@@ -515,6 +515,7 @@
         "enabled": { "type": "boolean" },
         "schedule": { "type": "string" },
         "retention": { "type": "integer" },
+        "elasticsearch": { "type": "boolean"},
         "storage": { "type": "string" },
         "storageClassName": { "type": "string" },
         "csiDriverName": { "type": "string" },
