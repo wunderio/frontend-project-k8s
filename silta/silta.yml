@@ -75,9 +75,6 @@ varnish:
 
 redis:
   enabled: false
-#Setting the value false by default as it is causing slowdown on namespaces with lot of environment variables.
-  master:
-    enableServiceLinks: false  
   auth:
     password: "foo"
     
