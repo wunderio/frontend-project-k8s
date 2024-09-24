@@ -568,6 +568,7 @@ redis:
     autoscaling:
       enabled: false
   master:
+    enableServiceLinks: false  
     resources:
       limits:
         cpu: 250m
@@ -575,4 +576,7 @@ redis:
       requests:
         cpu: 50m
         memory: 256Mi
-
+  replica:
+    enableServiceLinks: false   
+  sentinel:
+    enableServiceLinks: false 
