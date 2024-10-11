@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  silta: silta/silta@dev:master
+  silta: silta/silta@dev:pullsecrets
 
 executors:
   node12:
@@ -73,6 +73,10 @@ workflows:
           codebase-build:
             # - silta/npm-install-build:
             #     build-command: ''
+            - run:
+                name: Download feature branch build of silta cli
+                command: |
+                  curl -sL https://github.com/wunderio/silta-cli/releases/download/test/silta-test-linux-amd64.tar.gz | tar xz -C ~/.local/bin
             - silta/npm-install-build:
                 path: './hello'
                 build-command: ''
