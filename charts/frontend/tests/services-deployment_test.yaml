@@ -325,3 +325,96 @@ tests:
           value:
             .dockerconfigjson: foo
 
+  - it: can set terminationGracePeriodSeconds
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+        terminationGracePeriodSeconds: 123
+    asserts:
+      - equal:
+          path: spec.template.spec.terminationGracePeriodSeconds
+          value: 123
+
+  - it: Uses serviceDefaults lifecycle hook
+    template: services-deployment.yaml
+    set:
+      services:
+        service1:
+          image: 'foo'
+        service2:
+          image: 'bar'
+      serviceDefaults:
+        lifecycle:
+          postStart: 
+            exec:
+              command: ['/bin/echo', 'foo']
+          preStop: 
+            exec:
+              command: ['/bin/echo', 'bar']
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].lifecycle
+          value:
+            postStart:
+              exec:
+                command: ['/bin/echo', 'foo']
+            preStop:
+              exec:
+                command: ['/bin/echo', 'bar']
+      - documentIndex: 1
+        equal:
+          path: spec.template.spec.containers[0].lifecycle
+          value:
+            postStart:
+              exec:
+                command: ['/bin/echo', 'foo']
+            preStop:
+              exec:
+                command: ['/bin/echo', 'bar']
+
+  - it: Allows override of lifecycle hook
+    template: services-deployment.yaml
+    set:
+      services:
+        service1:
+          image: 'foo'
+        service2:
+          image: 'bar'
+          lifecycle:
+            postStart: 
+              exec:
+                command: ['/bin/echo', 'baz']
+            preStop: 
+              exec:
+                command: ['/bin/echo', 'qux']
+      serviceDefaults:
+        lifecycle:
+          postStart: 
+            exec:
+              command: ['/bin/echo', 'foo']
+          preStop: 
+            exec:
+              command: ['/bin/echo', 'bar']
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].lifecycle
+          value:
+            postStart:
+              exec:
+                command: ['/bin/echo', 'foo']
+            preStop:
+              exec:
+                command: ['/bin/echo', 'bar']
+      - documentIndex: 1
+        equal:
+          path: spec.template.spec.containers[0].lifecycle
+          value:
+            postStart:
+              exec:
+                command: ['/bin/echo', 'baz']
+            preStop:
+              exec:
+                command: ['/bin/echo', 'qux']

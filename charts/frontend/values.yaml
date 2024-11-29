@@ -345,6 +345,11 @@ serviceDefaults:
   # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
   strategy:
     type: RollingUpdate
+  terminationGracePeriodSeconds: 30
+  lifecycle:
+    preStop:
+      exec:
+        command: ['/bin/sleep', '15']
   autoscaling:
     enabled: false
     minReplicas: 1

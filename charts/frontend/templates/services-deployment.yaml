@@ -22,7 +22,7 @@ spec:
         {{- include "frontend.release_labels" $ | nindent 8 }}
         deployment: frontend-{{ $index }}
         silta-frontend: service
-        {{ if $.Values.shell.enabled -}}
+        {{- if $.Values.shell.enabled }}
         silta-ingress: allow
         {{- end }}
       annotations:
@@ -37,22 +37,24 @@ spec:
         - containerPort: {{ default $.Values.serviceDefaults.port $service.port }}
           name: {{ $index }}
         volumeMounts:
-          {{ if $service.mounts }}
-          {{- range $index, $mountName := $service.mounts -}}
-          {{ $mount := (index $.Values.mounts $mountName) }}
+          {{- if $service.mounts }}
+          {{- range $index, $mountName := $service.mounts }}
+          {{- $mount := (index $.Values.mounts $mountName) }}
           {{- if eq $mount.enabled true }}
           - name: frontend-{{ $mountName }}
             mountPath: {{ $mount.mountPath }}
           {{- end }}
           {{- end }}
           {{- end }}
-          {{ if $.Values.shell.enabled -}}
+          {{- if $.Values.shell.enabled }}
           - name: shell-keys
             mountPath: /etc/ssh/keys
           {{- end }}
-        {{- if $service.lifecycle }}
         lifecycle:
-        {{- toYaml $service.lifecycle | nindent 10 }}
+        {{- if $service.lifecycle }}
+          {{ toYaml $service.lifecycle | nindent 10 }}
+        {{- else }}
+          {{ toYaml $.Values.serviceDefaults.lifecycle | nindent 10 }}
         {{- end }}
         livenessProbe:
         {{- if $service.livenessProbe }}
@@ -79,14 +81,14 @@ spec:
         {{- end }}
         {{- end }}
         resources:
-          {{- if $service.resources -}}
+          {{- if $service.resources }}
           {{ merge $service.resources $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
-          {{ else -}}
-          {{ $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
+          {{- else }}
+          {{- $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
           {{- end }}
       volumes:
         {{ if $service.mounts }}
-        {{- range $index, $mountName := $service.mounts -}}
+        {{- range $index, $mountName := $service.mounts }}
         {{ $mount := (index $.Values.mounts $mountName) }}
         {{- if eq $mount.enabled true }}
         - name: frontend-{{ $mountName }}
@@ -107,7 +109,7 @@ spec:
         {{- end }}
         {{- end }}
         {{- end }}
-        {{ if $.Values.shell.enabled -}}
+        {{- if $.Values.shell.enabled }}
         - name: shell-keys
           persistentVolumeClaim:
             {{- if and ( eq $.Values.shell.mount.storageClassName "silta-shared" ) ( eq ( include "silta-cluster.rclone.has-provisioner" $ ) "true" ) }}
@@ -116,7 +118,7 @@ spec:
             claimName: {{ $.Release.Name }}-shell-keys
             {{- end }}
         {{- end }}
-      {{ if $service.nodeSelector -}}
+      terminationGracePeriodSeconds: {{ default $.Values.serviceDefaults.terminationGracePeriodSeconds $service.terminationGracePeriodSeconds }}
       nodeSelector:
         {{- $service.nodeSelector | toYaml | nindent 8 }}
       tolerations:
@@ -209,7 +211,7 @@ spec:
             {{- end }}
         volumeMounts:
           {{ if $service.mounts }}
-          {{- range $index, $mountName := $service.mounts -}}
+          {{- range $index, $mountName := $service.mounts }}
           {{ $mount := (index $.Values.mounts $mountName) }}
           {{- if eq $mount.enabled true }}
           - name: frontend-{{ $mountName }}
@@ -217,7 +219,7 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
-          {{ if $.Values.shell.enabled -}}
+          {{- if $.Values.shell.enabled }}
           - name: shell-keys
             mountPath: /etc/ssh/keys
           {{- end }}
@@ -233,8 +235,8 @@ spec:
         {{- end }}
       volumes:
         {{ if $service.mounts }}
-        {{- range $index, $mountName := $service.mounts -}}
-        {{ $mount := (index $.Values.mounts $mountName) }}
+        {{- range $index, $mountName := $service.mounts }}
+        {{- $mount := (index $.Values.mounts $mountName) }}
         {{- if eq $mount.enabled true }}
         - name: frontend-{{ $mountName }}
         {{- if hasKey $mount "secretName" }}
@@ -254,7 +256,7 @@ spec:
         {{- end }}
         {{- end }}
         {{- end }}
-        {{ if $.Values.shell.enabled -}}
+        {{- if $.Values.shell.enabled }}
         - name: shell-keys
           persistentVolumeClaim:
             {{- if and ( eq $.Values.shell.mount.storageClassName "silta-shared" ) ( eq ( include "silta-cluster.rclone.has-provisioner" $ ) "true" ) }}

@@ -13,4 +13,11 @@ app.get('/hello/elasticsearch-status', async (req, res) => {
   res.send(health.body.status);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server in 10 seconds')
+
+  const closeServer = () => server.close()
+  setTimeout(closeServer, 10000)
+})

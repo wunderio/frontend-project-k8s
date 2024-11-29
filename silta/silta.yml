@@ -31,7 +31,7 @@ services:
           command: ['/bin/sh', '-c', 'echo "Hello container is starting" > /usr/share/message']
       preStop:
         exec:
-          command: ['/bin/sh', '-c', 'echo "Hello container is shutting down" > /usr/share/message; /bin/sleep 5']
+          command: ['/bin/sh', '-c', 'echo "Hello container is shutting down" > /usr/share/message; /bin/sleep 10']
     postinstall:
       command: |
         echo Postinstall command executed
@@ -71,7 +71,7 @@ silta-release:
     enabled: true
 
 varnish:
-  enabled: true
+  enabled: false
 
 redis:
   enabled: false
@@ -79,4 +79,8 @@ redis:
     password: "foo"
     
 mongodb:
-  enabled: true
+  enabled: false
+
+backup:
+  enabled: false
+  schedule: "*/2 * * * *"
