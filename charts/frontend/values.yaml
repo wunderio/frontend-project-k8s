@@ -359,6 +359,8 @@ serviceDefaults:
       resource:
         name: cpu
         targetAverageUtilization: 80
+  # nodeSelector:
+  #   cloud.google.com/gke-nodepool: static-ip
 
 # Provide defaults for all cron jobs. This will override serviceDefaults when defined.
 cronJobDefaults:

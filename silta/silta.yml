@@ -71,7 +71,7 @@ silta-release:
     enabled: true
 
 varnish:
-  enabled: false
+  enabled: true
 
 redis:
   enabled: false

@@ -181,13 +181,34 @@ tests:
           path: spec.template.spec.containers[0].resources.limits.memory
           value: 4G
 
-  - it: can set nodeSelectors
+  - it: can set nodeSelector via serviceDefaults
+    template: services-deployment.yaml
+    set:
+      services.foo:
+        image: 'bar'
+      serviceDefaults.nodeSelector:
+        foo: bar
+    asserts:
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            foo: bar
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: foo
+            operator: Equal
+            value: bar
+
+  - it: can override nodeSelector in service
     template: services-deployment.yaml
     set:
       services.foo:
         image: 'bar'
         nodeSelector:
           bar: baz
+      serviceDefaults.nodeSelector:
+        foo: bar
     asserts:
       - equal:
           path: spec.template.spec.nodeSelector

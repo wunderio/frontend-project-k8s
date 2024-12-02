@@ -119,10 +119,12 @@ spec:
             {{- end }}
         {{- end }}
       terminationGracePeriodSeconds: {{ default $.Values.serviceDefaults.terminationGracePeriodSeconds $service.terminationGracePeriodSeconds }}
+      {{- $nodeSelector := default $.Values.serviceDefaults.nodeSelector $service.nodeSelector }}
+      {{- if $nodeSelector }}
       nodeSelector:
-        {{- $service.nodeSelector | toYaml | nindent 8 }}
+        {{ $nodeSelector | toYaml | nindent 8 }}
       tolerations:
-        {{- include "frontend.tolerations" $service.nodeSelector | nindent 8 }}
+        {{ include "frontend.tolerations" $nodeSelector | nindent 8 }}
       affinity:
         podAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

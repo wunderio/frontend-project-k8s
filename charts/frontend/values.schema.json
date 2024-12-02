@@ -374,6 +374,9 @@
           }
         },
         "terminationGracePeriodSeconds": { "type": "integer" },
+        "nodeSelector": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
         }
       }
     },
