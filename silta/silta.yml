@@ -79,8 +79,4 @@ redis:
     password: "foo"
     
 mongodb:
-  enabled: false
-
-backup:
-  enabled: false
-  schedule: "*/2 * * * *"
+  enabled: true
