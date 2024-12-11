@@ -84,6 +84,7 @@ spec:
           {{ else -}}
           {{ $.Values.serviceDefaults.resources | toYaml | nindent 10 }}
           {{- end }}
+      serviceAccountName: {{ include "frontend.serviceAccountName" $ }}
       volumes:
         {{ if $service.mounts }}
         {{- range $index, $mountName := $service.mounts -}}
