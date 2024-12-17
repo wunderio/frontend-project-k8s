@@ -3,6 +3,8 @@
 silta-release:
   downscaler:
     enabled: true
+    # value examples: 10y, 4w, 1h Defaults to values used in silta-downscaler chart.
+    releaseMinAge: ''
 
 # Main domain of the cluster.
 # Subdomains of this domain will be created automatically for each environment.
