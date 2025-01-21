@@ -168,5 +168,4 @@ spec:
                 {{- else }}
                 claimName: {{ .Release.Name }}-backup
                 {{- end }}
-          {{- include "frontend.imagePullSecrets" $ | nindent 10 }}
 {{- end }}
