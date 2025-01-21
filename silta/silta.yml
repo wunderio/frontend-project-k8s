@@ -70,15 +70,7 @@ silta-release:
   proxy:
     enabled: true
   downscaler:
-    # How long should releases be kept by default.
-    defaultMinAge: 1d
-    # How long should releases with matching names be kept. The last matching rule takes effect.
-    releaseMinAge:
-      "^production": 10y
-      "^(master|main|stage|staging)": 8w
-      "^(dev|develop|development)": 4w
-      "^dependabot": 1h
-      "^feature": 1w
+    releaseMinAge: '1w'
 
 varnish:
   enabled: true
