@@ -212,6 +212,7 @@
               "preStop": { "type": "object" }
             }
           },
+          "terminationGracePeriodSeconds": { "type": "integer" },
           "readinessProbe": { "type": "object" },
           "livenessProbe": { "type": "object" },
           "strategy": { "type": "object" },
@@ -363,6 +364,19 @@
             "maxReplicas": { "type": "integer" },
             "metrics": { "type": "array" }
           }
+        },
+        "lifecycle": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "postStart": { "type": "object" },
+            "preStop": { "type": "object" }
+          }
+        },
+        "terminationGracePeriodSeconds": { "type": "integer" },
+        "nodeSelector": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
         }
       }
     },
