@@ -351,6 +351,11 @@ serviceDefaults:
   # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
   strategy:
     type: RollingUpdate
+  terminationGracePeriodSeconds: 30
+  lifecycle:
+    preStop:
+      exec:
+        command: ['/bin/sleep', '15']
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -360,6 +365,8 @@ serviceDefaults:
       resource:
         name: cpu
         targetAverageUtilization: 80
+  # nodeSelector:
+  #   cloud.google.com/gke-nodepool: static-ip
 
 # Provide defaults for all cron jobs. This will override serviceDefaults when defined.
 cronJobDefaults:
