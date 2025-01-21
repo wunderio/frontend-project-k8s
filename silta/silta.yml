@@ -69,6 +69,8 @@ shell:
 silta-release:
   proxy:
     enabled: true
+  downscaler:
+    releaseMinAge: '1w'
 
 varnish:
   enabled: true
@@ -77,6 +79,6 @@ redis:
   enabled: false
   auth:
     password: "foo"
-    
+
 mongodb:
   enabled: true
