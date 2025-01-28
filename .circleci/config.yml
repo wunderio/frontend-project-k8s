@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  silta: silta/si0lta@dev:custom-proxy-command
+  silta: silta/silta@dev:custom-proxy-command
 
 executors:
   node12:
