@@ -64,6 +64,7 @@ workflows:
           name: 'Build & deploy master'
 
           executor: node22
+          custom-proxy-command: "echo 'proxy command'"
 
           # Use a local chart during development.
           # Don't copy this! We only use following 2 lines for chart development in this repository.
