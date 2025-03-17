@@ -5,6 +5,11 @@
 # for all possible options.
 
 nginx:
+  extraConfig: |
+    map $http_upgrade $connection_upgrade {
+      default upgrade;
+      '' close;
+    }
   redirects:
     - description: 'Redirect main path to default service (exact match)'
       from: ""
