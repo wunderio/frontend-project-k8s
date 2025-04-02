@@ -80,3 +80,6 @@ redis:
     
 mongodb:
   enabled: true
+
+mailpit:
+  enabled: true
