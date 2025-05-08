@@ -38,6 +38,14 @@ services:
     postupgrade:
       command: |
         echo Postupgrade command executed
+    containerSecurityContext:
+      runAsUser: 0
+    podSecurityContext:
+      capabilities:
+        drop: 
+        - ALL
+        add:
+        - NET_BIND_SERVICE
 
   world:
     exposedRoute: '/world'
