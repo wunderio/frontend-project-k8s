@@ -63,6 +63,8 @@ workflows:
             - 'Validate frontend chart'
           name: 'Build & deploy master'
 
+          helm_flags: "--history-max=2"
+
           executor: node22
 
           # Use a local chart during development.
