@@ -81,5 +81,5 @@ redis:
 mongodb:
   enabled: true
 
-mailpit:
+mailhog:
   enabled: true
