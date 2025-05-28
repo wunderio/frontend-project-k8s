@@ -83,3 +83,11 @@ mongodb:
 
 mailpit:
   enabled: true
+
+# https://github.com/wunderio/charts/blob/master/rabbitmq/values.yaml
+rabbitmq:
+  enabled: true
+  auth:
+    username: "rabbitmq"
+    password: "k0CYraoNLn"
+    # erlangCookie: "nI540IJUIMWIoQb5f5mNVz0qWOECTyAT"
