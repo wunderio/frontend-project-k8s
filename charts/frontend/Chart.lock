@@ -12,8 +12,8 @@ dependencies:
   repository: file://../elasticsearch
   version: 8.5.1
 - name: rabbitmq
-  repository: https://storage.googleapis.com/charts.wdr.io
-  version: 6.17.5
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 16.0.3
 - name: mongodb
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 14.12.3
@@ -26,5 +26,5 @@ dependencies:
 - name: redis
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 19.1.5
-digest: sha256:6d8a9d224e4f05d80001444956b411ec09e584c90894d897ebf0f4d7d275d7f9
-generated: "2025-04-08T22:49:11.202227+03:00"
+digest: sha256:1761a40f3a33f3473bddcafd2b0a30394b46e5942713eab4aad5660bc25e4beb
+generated: "2025-05-28T20:54:16.177275472+03:00"
