@@ -83,3 +83,7 @@ mongodb:
 
 mailpit:
   enabled: true
+
+# https://github.com/wunderio/charts/blob/master/rabbitmq/values.yaml
+rabbitmq:
+  enabled: true
