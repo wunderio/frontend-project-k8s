@@ -19,6 +19,9 @@ services:
     port: 4000
     env:
       FOO: 'BAR'
+    mounts:
+      - documents
+      - images
     # Overridden liveness probe.
     livenessProbe:
       tcpSocket:
@@ -45,6 +48,7 @@ services:
     replicas: 2
     mounts:
       - files
+      - images
     cron:
       world-cli:
         command: echo $(date) > /app/files/lastupdate.txt
@@ -58,8 +62,20 @@ services:
 mounts:
   files:
     enabled: true
-    storage: 1G
+    storage: 100Mi
     mountPath: /app/files
+    storageClassName: silta-shared
+    csiDriverName: csi-rclone
+  documents:
+    enabled: true
+    storage: 100Mi
+    mountPath: /app/documents
+    storageClassName: silta-shared
+    csiDriverName: csi-rclone
+  images:
+    enabled: true
+    storage: 100Mi
+    mountPath: /app/images
     storageClassName: silta-shared
     csiDriverName: csi-rclone
 
