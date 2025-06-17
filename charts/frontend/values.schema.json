@@ -287,6 +287,8 @@
                 "schedule": { "type": "string" },
                 "parallelism": { "type": "integer" },
                 "nodeSelector": { "type": "object" },
+                "podSecurityContext": { "type": "object" },
+                "containerSecurityContext": { "type": "object" },
                 "resources": {
                   "type": "object",
                   "additionalProperties": false,
