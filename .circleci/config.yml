@@ -133,7 +133,7 @@ workflows:
                 - master
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
-                - /feature\/test-bcluster\/.*/
+                - /feature\/test-b-cluster\/.*/
                 - /feature\/aws\/.*/
                 - /feature\/cert-manager-upgrade
 
