@@ -117,6 +117,7 @@ workflows:
                 - master
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
+                - /feature\/test-b-cluster\/.*/
                 - /feature\/aws\/.*/
                 - /feature\/cert-manager-upgrade
 
@@ -132,6 +133,7 @@ workflows:
                 - master
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
+                - /feature\/test-bcluster\/.*/
                 - /feature\/aws\/.*/
                 - /feature\/cert-manager-upgrade
 
@@ -159,7 +161,6 @@ workflows:
           # Extend the build-deploy configuration for the test cluster deployments
           <<: *build-deploy
           name: 'Build & deploy to test cluster'
-          silta_config: silta/silta.yml,silta/silta-test.yml
           context: silta_test
           filters:
             branches:
@@ -167,6 +168,16 @@ workflows:
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
                 - /feature\/cert-manager-upgrade
+
+      - silta/frontend-build-deploy:
+          # Extend the build-deploy configuration for the test-b cluster deployments
+          <<: *build-deploy
+          name: 'Build & deploy to test-b cluster'
+          context: silta_test_b
+          filters:
+            branches:
+              only:
+                - /feature\/test-b-cluster\/.*/
 
       - silta/frontend-build-deploy:
           # Extend the build-deploy configuration for the aws cluster deployments
@@ -249,6 +260,7 @@ workflows:
                 - production
                 - /feature\/test\/.*/
                 - /feature\/test-cluster\/.*/
+                - /feature\/test-b-cluster\/.*/
                 - /feature\/aws\/.*/
                 - /feature\/cert-manager-upgrade
 
