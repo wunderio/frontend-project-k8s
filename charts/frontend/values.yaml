@@ -124,7 +124,7 @@ singleSubdomain: false
 
 # These variables are build-specific and should be passed via the --set parameter.
 nginx:
-  image: 'wunderio/silta-nginx:1.26-v1'
+  image: 'wunderio/silta-nginx:1.28-v1.0-test1'
 
   # Requires "X-Proxy-Auth" header from upstream when value is non-empty string.
   x_proxy_auth: ""
