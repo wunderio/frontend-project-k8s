@@ -77,9 +77,12 @@ redis:
   enabled: false
   auth:
     password: "foo"
-    
+
 mongodb:
   enabled: true
 
 mailpit:
+  enabled: true
+
+signalsciences:
   enabled: true
