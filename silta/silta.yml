@@ -74,12 +74,132 @@ varnish:
   enabled: true
 
 redis:
-  enabled: false
+  enabled: true
   auth:
     password: "foo"
-    
+  image:
+    registry: docker.io
+    repository: wunderio/bitnami-redis
+    tag: 7.2.4-debian-12-r13
+  sentinel:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-redis-sentinel
+      tag: 7.2.4-debian-12-r10
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-redis-exporter
+      tag: 1.59.0-debian-12-r1
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-os-shell
+      tag: 12-debian-12-r19
+  kubectl:
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-kubectl
+      tag: 1.30.0-debian-12-r0
+  sysctl:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-os-shell
+      tag: 12-debian-12-r19
+
 mongodb:
   enabled: true
+  image:
+    registry: docker.io
+    repository: wunderio/bitnami-mongodb
+    tag: 7.0.6-debian-12-r0
+  tls:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-nginx
+      tag: 1.25.4-debian-12-r2
+  externalAccess:
+    enabled: false
+    autoDiscovery:
+      enabled: false
+      image:
+        registry: docker.io
+        repository: wunderio/bitnami-kubectl
+        tag: 1.29.2-debian-12-r2
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-os-shell
+      tag: 12-debian-12-r16
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-mongodb-exporter
+      tag: 0.40.0-debian-12-r12
 
+postgresql:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: wunderio/bitnami-postgresql
+    tag: 16.1.0-debian-11-r15
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-os-shell
+      tag: 11-debian-11-r91
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-postgres-exporter
+      tag: 0.15.0-debian-11-r2
+
+rabbitmq:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: wunderio/bitnami-rabbitmq
+    tag: 3.8.2-debian-10-r30
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-rabbitmq-exporter
+      tag: 0.29.0-debian-10-r28
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-minideb
+      tag: buster
+
+mariadb:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: wunderio/bitnami-mariadb
+    tag: 10.3.24-debian-10-r49
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-minideb
+      tag: buster
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: wunderio/bitnami-mysqld-exporter
+      tag: 0.12.1-debian-10-r235
+  
 mailpit:
   enabled: true
