@@ -15,6 +15,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 helm.sh/chart: {{ template "frontend.chart" . }}
 {{- end }}
 
+{{- define "frontend.basicauth-in-use" }}
+{{- $basicauth_in_use := false }}
+{{- range $index, $service := $.Values.services -}}
+{{- if or (($.Values.nginx).basicauth).enabled (($service.nginx).basicauth).enabled }}
+{{- $basicauth_in_use = true }}
+{{- end }}
+{{- end }}
+{{- if $basicauth_in_use }}true
+{{- else }}false
+{{- end }}
+{{- end }}
+
 {{- define "frontend.basicauth" }}
 {{- if .Values.nginx.basicauth.enabled }}
 satisfy any;

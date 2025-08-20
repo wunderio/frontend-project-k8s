@@ -13,7 +13,7 @@ Deployed {{ .Release.Name }} successfully, your site is available here:
   {{- end -}}
   {{- end }}
 
-  {{ if .Values.nginx.basicauth.enabled -}}
+  {{- if eq ( include "frontend.basicauth-in-use" . ) "true" }}
   Basicauth username: {{ .Values.nginx.basicauth.credentials.username }}
   Basicauth password: {{ .Values.nginx.basicauth.credentials.password }}
   {{- end }}

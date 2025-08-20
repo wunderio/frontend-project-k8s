@@ -292,6 +292,9 @@ services: {}
 
   #  nginx:
   #    denyDotFiles: true
+  #    basicauth:
+  #      enabled: true
+
   #    locationExtraConfig: |
   #      # Extra nginx configuration snippet for this service location block.
 

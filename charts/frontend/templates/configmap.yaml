@@ -269,7 +269,9 @@ data:
         {{- tpl $service.nginx.locationExtraConfig $ | nindent 8 }}
         {{- end }}
 
+        {{- if or (($.Values.nginx).basicauth).enabled (($service.nginx).basicauth).enabled }}
         {{- include "frontend.basicauth" $ | trim | nindent 8 }}
+        {{- end }}
 
         location = {{ $service.exposedRoute }}/robots.txt {
           access_log off;

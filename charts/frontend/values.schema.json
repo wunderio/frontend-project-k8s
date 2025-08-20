@@ -274,6 +274,12 @@
             "additionalProperties": false,
             "properties": {
               "denyDotFiles": { "type": "boolean" },
+              "basicauth": {
+                "type": "object",
+                "properties": {
+                  "enabled": { "type": "boolean" }
+                }
+              },
               "locationExtraConfig": { "type": "string" }
             }
           },
