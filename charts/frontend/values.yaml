@@ -450,7 +450,7 @@ mariadb:
   image:
     registry: docker.io
     repository: wunderio/bitnami-mariadb
-    tag: 10.6.15-debian-11-r24
+    tag: 11.4-debian-12
   replication:
     enabled: false
   db:
@@ -690,7 +690,7 @@ mailhog:
 redis:
   enabled: false
   # https://hub.docker.com/r/bitnamilegacy/redis/tags
-  # https://hub.docker.com/r/wunderio/bitnami-redis/tags  
+  # https://hub.docker.com/r/wunderio/bitnami-redis/tags
   image:
     registry: docker.io
     repository: wunderio/bitnami-redis
