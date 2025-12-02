@@ -33,7 +33,8 @@
               "issuer": { "type": "string" },
               "ca": { "type": "string" },
               "key": { "type": "string" },
-              "crt": { "type": "string" }
+              "crt": { "type": "string" },
+              "existingTLSSecret": { "type": "string" }
             }
           },
           "ingress": { "type": "string" }
@@ -52,7 +53,8 @@
             "issuer": { "type": "string" },
             "ca": { "type": "string" },
             "key": { "type": "string" },
-            "crt": { "type": "string" }
+            "crt": { "type": "string" },
+            "existingTLSSecret": { "type": "string" }
           }
         },
         "ingress": { "type": "string" }
@@ -73,7 +75,8 @@
         "issuer": { "type": "string" },
         "ca": { "type": "string" },
         "key": { "type": "string" },
-        "crt": { "type": "string" }
+        "crt": { "type": "string" },
+        "existingTLSSecret": { "type": "string" }
       }
     },
     "backendConfig": {
@@ -110,6 +113,7 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "version": { "type": "string" },
         "image": { "type": "string" },
         "replicas": { "type": "integer" },
         "autoscaling": {
@@ -171,6 +175,7 @@
         "content_security_policy": { "type": "string" },
         "serverExtraConfig": { "type": "string" },
         "locationExtraConfig": { "type": "string" },
+        "httpConfig": { "type": "object" },
         "extraConfig": { "type": "string" },
         "extra_headers": { "type": "object" },
         "extra_conditions": { "type": "string" },
@@ -287,6 +292,10 @@
                 "schedule": { "type": "string" },
                 "parallelism": { "type": "integer" },
                 "nodeSelector": { "type": "object" },
+                "tolerations": { "type": "array" },
+                "affinity": { "type": "object" },
+                "podSecurityContext": { "type": "object" },
+                "containerSecurityContext": { "type": "object" },
                 "resources": {
                   "type": "object",
                   "additionalProperties": false,
@@ -321,6 +330,8 @@
             "type": "object",
             "additionalProperties": { "type": "string" }
           },
+          "tolerations": { "type": ["array", "null"] },
+          "affinity": { "type": ["object", "null"] },
           "containerSecurityContext": {
             "type": "object",
             "additionalProperties": false,
@@ -501,6 +512,12 @@
         "nodeSelector": {
           "type": "object",
           "additionalProperties": { "type": "string" }
+        },
+        "tolerations": {
+          "type": ["array", "null"]
+        },
+        "affinity": {
+          "type": ["object", "null"]
         }
       }
     },
@@ -531,7 +548,9 @@
         "nodeSelector": {
           "type": "object",
           "additionalProperties": { "type": "string" }
-        }
+        },
+        "tolerations": { "type": ["array", "null"] },
+        "affinity": { "type": ["object", "null"] }
       }
     },
     "shell": {

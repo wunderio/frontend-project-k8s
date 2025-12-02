@@ -8,7 +8,14 @@ data:
   {{- if .Values.signalsciences.enabled }}
   nginx_signalsciences_conf: |
     load_module /etc/nginx/modules/ngx_http_sigsci_module.so;
+
+  {{- /* NDK module is required only for nginx versions < 1.26. */}}
+  {{- $versionParts := split "." .Values.nginx.version }}
+  {{- $nginxMajor := $versionParts._0 }}
+  {{- $nginxMinor := $versionParts._1 }}
+  {{- if or (empty $nginxMajor) (and (eq $nginxMajor "1" ) ( lt $nginxMinor "26" )) }}
     load_module /etc/nginx/modules/ndk_http_module.so;
+  {{- end }}
   {{- end }}
 
   nginx_conf: |
@@ -44,6 +51,7 @@ data:
       {{- end }}
 
       real_ip_header              {{ .Values.nginx.real_ip_header }};
+      real_ip_recursive           on;
 
       include                     /etc/nginx/mime.types;
       default_type                application/octet-stream;
@@ -61,8 +69,6 @@ data:
       client_header_timeout       60s;
       client_max_body_size        32m;
       client_body_buffer_size     16k;
-      client_header_buffer_size   4k;
-      large_client_header_buffers 8 16K;
       keepalive_timeout           75s;
       keepalive_requests          100;
       reset_timedout_connection   off;
@@ -95,7 +101,7 @@ data:
           default  '';
       }
       add_header X-Robots-Tag $x_robots_tag_header always;
-      
+
       map $uri $no_slash_uri {
           ~^/(?<no_slash>.*)$ $no_slash;
       }
@@ -106,6 +112,19 @@ data:
       # Verify if x_proxy_auth value is correct
       map $http_x_proxy_auth $proxy_auth { default 0; '{{ .Values.nginx.x_proxy_auth }}' 1; }
       {{- end}}
+
+      {{- if .Values.nginx.httpConfig  }}
+      # nginx.httpConfig values
+      {{- range $k, $v := .Values.nginx.httpConfig  }}
+      {{- if not (eq $v "null") }}
+      {{- if (contains "\n" $v) }}
+      {{- printf "%s %s" $k (tpl $v $) | nindent 6 }}
+      {{- else }}
+      {{ $k }} {{ tpl $v $ }};
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- end }}
 
       include conf.d/*.conf;
     }
