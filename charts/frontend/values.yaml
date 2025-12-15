@@ -631,8 +631,8 @@ rabbitmq:
     size: 1Gi
   image:
     registry: docker.io
-    repository: wunderio/bitnami-rabbitmq
-    tag: 4.1.0-debian-12-r1
+    repository: wunderio/silta-rabbitmq
+    tag: 4.1-bc
   enableServiceLinks: false
   networkPolicy:
     # We create our own network policy for the rabbitmq service.
