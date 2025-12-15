@@ -622,9 +622,11 @@ postgresql:
     create: true
     automountServiceAccountToken: false
 
-# https://github.com/wunderio/charts/blob/master/rabbitmq/values.yaml
+# https://github.com/wunderio/charts/blob/master/forked/bitnami/rabbitmq-16.0.3/values.yaml
 rabbitmq:
   enabled: false
+  # auth:
+  #   password: ""
   persistence:
     size: 1Gi
   image:
