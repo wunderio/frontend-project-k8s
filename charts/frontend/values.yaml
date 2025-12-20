@@ -704,8 +704,8 @@ redis:
   # https://hub.docker.com/r/wunderio/bitnami-redis/tags
   image:
     registry: docker.io
-    repository: wunderio/bitnami-redis
-    tag: 7.2.4-debian-12-r13
+    repository: wunderio/silta-redis
+    tag: 7.4-bc
   architecture: standalone
   auth:
     # mandatory value
