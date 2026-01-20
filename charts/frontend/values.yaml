@@ -590,13 +590,14 @@ mongodb:
   enabled: false
   # https://hub.docker.com/r/bitnamilegacy/mongodb/tags
   # https://hub.docker.com/r/wunderio/bitnami-mongodb/tags
+  # https://hub.docker.com/r/wunderio/silta-mongodb/tags
   image:
     registry: docker.io
-    repository: wunderio/bitnami-mongodb
-    tag: "6.0"
+    repository: wunderio/silta-mongodb
+    tag: "7.0-bc"
   initdbScripts:
     setFeatureCompatibilityVersion.js: |
-      db.adminCommand({ setFeatureCompatibilityVersion: "6.0" });
+      db.adminCommand({setFeatureCompatibilityVersion: "7.0", confirm: true});
   auth:
     enabled: false
   updateStrategy:
