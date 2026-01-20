@@ -83,3 +83,8 @@ mongodb:
 
 mailpit:
   enabled: true
+
+rabbitmq:
+  enabled: true
+  auth:
+    password: "foo"

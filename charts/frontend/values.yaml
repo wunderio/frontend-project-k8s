@@ -623,15 +623,17 @@ postgresql:
     create: true
     automountServiceAccountToken: false
 
-# https://github.com/wunderio/charts/blob/master/rabbitmq/values.yaml
+# https://github.com/wunderio/charts/blob/master/forked/bitnami/rabbitmq-16.0.3/values.yaml
 rabbitmq:
   enabled: false
+  # auth:
+  #   password: ""
   persistence:
     size: 1Gi
   image:
     registry: docker.io
-    repository: wunderio/bitnami-rabbitmq
-    tag: 4.1.0-debian-12-r1
+    repository: wunderio/silta-rabbitmq
+    tag: 4.2-bc
   enableServiceLinks: false
   networkPolicy:
     # We create our own network policy for the rabbitmq service.
