@@ -450,12 +450,13 @@ cronJobDefaults:
 # see: https://github.com/wunderio/charts/blob/master/forked/bitnami/mariadb-7.10.4/values.yaml
 mariadb:
   enabled: false
+  # https://hub.docker.com/r/wunderio/silta-mariadb/tags ("-bc" tags only)
   # https://hub.docker.com/r/bitnamilegacy/mariadb/tags
   # https://hub.docker.com/r/wunderio/bitnami-mariadb/tags
   image:
     registry: docker.io
-    repository: wunderio/bitnami-mariadb
-    tag: 11.4-debian-12-u
+    repository: wunderio/silta-mariadb
+    tag: 11.4-bc
   replication:
     enabled: false
   db:
