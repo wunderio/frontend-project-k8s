@@ -1,4 +1,4 @@
-FROM wunderio/silta-node:22-alpine-v1
+FROM wunderio/silta-node:22-debian13-v2
 
 COPY ./world /app
 
