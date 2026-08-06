@@ -1,5 +1,18 @@
 version: 2.1
 
+parameters:
+  # Extra silta config files appended by wunderio/silta-images when validating
+  # freshly released images (e.g. ",silta/silta-test-mongodb.yml").
+  # Empty on normal runs. Note: the value starts with a comma.
+  test_silta_config:
+    type: string
+    default: ""
+  # Helm flags injecting the released image tag, e.g.
+  # "--set-string mongodb.image.tag=7.0-v1.2.3". Empty on normal runs.
+  test_helm_flags:
+    type: string
+    default: ""
+
 orbs:
   silta: silta/silta@dev:master
 
@@ -72,6 +85,12 @@ workflows:
 
           # Uncomment the line below to use the test build of silta cli.
           #silta_cli_version: test
+
+          # Extra silta config files and helm flags injected by wunderio/silta-images
+          # when validating a freshly released image (e.g. mongodb, rabbitmq).
+          # Both are empty on normal runs, so nothing changes.
+          silta_config: silta/silta.yml<< pipeline.parameters.test_silta_config >>
+          helm_flags: "--history-max=4 << pipeline.parameters.test_helm_flags >>"
 
           codebase-build:
             - silta/npm-install-build:
