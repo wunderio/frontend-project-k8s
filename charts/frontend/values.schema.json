@@ -107,6 +107,20 @@
             "additionalProperties": { "type": "string" }
           }
         }
+      },
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "httproute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "gatewayName": { "type": "string" },
+        "gatewayNamespace": { "type": "string" },
+        "gatewayPort": { "type": "integer" },
+        "listenerName": { "type": "string" }
       }
     },
     "cluster": {
@@ -123,7 +137,7 @@
       "additionalProperties": false,
       "properties": {
         "version": { "type": "string" },
-        "image": { "type": "string" },
+        "image": { "oneOf": [{ "type": "string" }, { "type": "object", "properties": { "repository": { "type": "string" }, "tag": { "type": "string" } }, "required": ["repository", "tag"] }] },
         "replicas": { "type": "integer" },
         "autoscaling": {
           "type": "object",
@@ -217,7 +231,7 @@
         "additionalProperties": false,
         "properties": {
           "enabled": { "type": "boolean" },
-          "image": { "type": "string" },
+          "image": { "oneOf": [{ "type": "string" }, { "type": "object", "properties": { "repository": { "type": "string" }, "tag": { "type": "string" } }, "required": ["repository", "tag"] }] },
           "port": { "type": "integer" },
           "env": {
             "type": "object",
@@ -300,6 +314,7 @@
                 "command": { "type": "string" },
                 "schedule": { "type": "string" },
                 "parallelism": { "type": "integer" },
+                "activeDeadlineSeconds": { "type": "integer" },
                 "nodeSelector": { "type": "object" },
                 "tolerations": { "type": "array" },
                 "affinity": { "type": "object" },
@@ -534,6 +549,7 @@
       "type": ["object", "null"],
       "additionalProperties": false,
       "properties": {
+        "activeDeadlineSeconds": { "type": "integer" },
         "resources": {
           "type": ["object", "null"],
           "additionalProperties": false,
