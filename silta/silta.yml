@@ -92,8 +92,8 @@ rabbitmq:
 # mariadb:
 #   enabled: false
 
-# mariadb-ha:
-#   enabled: true
+mariadb-ha:
+  enabled: true
 
-# db:
-#   primary: mariadb-ha
+db:
+  primary: mariadb-ha
