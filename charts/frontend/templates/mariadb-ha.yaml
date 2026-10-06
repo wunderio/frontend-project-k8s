@@ -3,8 +3,8 @@
 {{- if not ( .Capabilities.APIVersions.Has "k8s.mariadb.com/v1alpha1" ) }}
 {{- fail "API k8s.mariadb.com/v1alpha1 unavailable, ask cluster administrator to enable mariadb-operator support in Silta cluster first!" }}
 {{- end }}
-{{- if lt (int $mariadbha.replicas) 3 }}
-{{- fail "mariadb-ha.replicas must be at least 3" }}
+{{- if or (lt (int $mariadbha.replicas) 3) (eq (mod (int $mariadbha.replicas) 2) 0) }}
+{{- fail "mariadb-ha.replicas must be an odd number, at least 3" }}
 {{- end }}
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
@@ -18,6 +18,8 @@ metadata:
     helm.sh/chart: {{ include "frontend.chart" . }}
 spec:
   port: 3306
+  database: {{ $mariadbha.db.name | quote }}
+  username: {{ $mariadbha.db.user | quote }}
   image: {{ $mariadbha.image | quote }}
   imagePullPolicy: {{ $mariadbha.imagePullPolicy | quote }}
   inheritMetadata:
@@ -87,7 +89,7 @@ spec:
     type: ReplicasFirstPrimaryLast
     autoUpdateDataPlane: true
   podDisruptionBudget:
-    maxUnavailable: 66%
+    maxUnavailable: 1
   livenessProbe:
     initialDelaySeconds: 20
     periodSeconds: 5
@@ -105,8 +107,8 @@ metadata:
     {{- include "frontend.release_labels" . | nindent 4 }}
 type: Opaque
 data:
-  password: "{{ $mariadbha.password | b64enc }}"
-  root-password: "{{ $mariadbha.rootPassword | b64enc }}"
+  password: "{{ $mariadbha.db.password | b64enc }}"
+  root-password: "{{ $mariadbha.rootUser.password | b64enc }}"
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -126,6 +128,8 @@ spec:
   - ports:
     - port: 3306
     - port: 4567
+    - port: 4567
+      protocol: UDP
     - port: 4568
     - port: 4444
     - port: 5555

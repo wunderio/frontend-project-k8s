@@ -1,0 +1,147 @@
+suite: MariaDB HA
+templates:
+  - services-deployment.yaml
+  - configmap.yaml
+  - mariadb-ha.yaml
+capabilities:
+  apiVersions:
+    - k8s.mariadb.com/v1alpha1
+tests:
+  - it: sets correct db environments when mariadb-ha enabled and primary db
+    template: services-deployment.yaml
+    set:
+      mariadb.enabled: false
+      mariadb-ha.enabled: true
+      db.primary: mariadb-ha
+      services.foo.image: bar
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_USER
+            value: root
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_HOST
+            value: RELEASE-NAME-mariadb-ha-primary
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-mariadb-ha
+                key: root-password
+
+  - it: sets mariadb-ha environments when enabled but not primary
+    template: services-deployment.yaml
+    set:
+      mariadb.enabled: true
+      mariadb-ha.enabled: true
+      services.foo.image: bar
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_HA_DB_HOST
+            value: RELEASE-NAME-mariadb-ha-primary
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_HOST
+            value: RELEASE-NAME-mariadb
+
+  - it: creates frontend user and database in mariadb-ha
+    template: mariadb-ha.yaml
+    documentIndex: 0
+    set:
+      mariadb-ha.enabled: true
+    asserts:
+      - isKind:
+          of: MariaDB
+      - equal:
+          path: spec.database
+          value: frontend
+      - equal:
+          path: spec.username
+          value: frontend
+      - equal:
+          path: spec.podDisruptionBudget.maxUnavailable
+          value: 1
+
+  - it: fails on even mariadb-ha replica count
+    template: mariadb-ha.yaml
+    set:
+      mariadb-ha.enabled: true
+      mariadb-ha.replicas: 4
+    asserts:
+      - failedTemplate:
+          errorMessage: mariadb-ha.replicas must be an odd number, at least 3
+
+  - it: fails on too few mariadb-ha replicas
+    template: mariadb-ha.yaml
+    set:
+      mariadb-ha.enabled: true
+      mariadb-ha.replicas: 1
+    asserts:
+      - failedTemplate:
+          errorMessage: mariadb-ha.replicas must be an odd number, at least 3
+
+  - it: sets custom mariadb-ha database name and user in environment
+    template: services-deployment.yaml
+    set:
+      mariadb.enabled: false
+      mariadb-ha.enabled: true
+      mariadb-ha.db.name: custom
+      mariadb-ha.db.user: customuser
+      db.primary: mariadb-ha
+      services.foo.image: bar
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DB_NAME
+            value: custom
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_HA_DB_NAME
+            value: custom
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MARIADB_HA_DB_USER
+            value: customuser
+
+  - it: sets custom mariadb-ha database name and user in MariaDB resource
+    template: mariadb-ha.yaml
+    documentIndex: 0
+    set:
+      mariadb-ha.enabled: true
+      mariadb-ha.db.name: custom
+      mariadb-ha.db.user: customuser
+    asserts:
+      - equal:
+          path: spec.database
+          value: custom
+      - equal:
+          path: spec.username
+          value: customuser
+
+  - it: sets mariadb-ha passwords in secret
+    template: mariadb-ha.yaml
+    documentIndex: 1
+    set:
+      mariadb-ha.enabled: true
+      mariadb-ha.db.password: userpass
+      mariadb-ha.rootUser.password: rootpass
+    asserts:
+      - isKind:
+          of: Secret
+      - equal:
+          path: data.password
+          value: dXNlcnBhc3M=
+      - equal:
+          path: data.root-password
+          value: cm9vdHBhc3M=

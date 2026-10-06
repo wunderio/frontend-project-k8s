@@ -139,9 +139,9 @@ rsync -az /values_mounts/ /backups/current/
 # MariaDB HA
 {{- if index ( index .Values "mariadb-ha" ) "enabled" }}
 - name: MARIADB_HA_DB_USER
-  value: "frontend"
+  value: "{{ (index .Values "mariadb-ha").db.user }}"
 - name: MARIADB_HA_DB_NAME
-  value: "frontend"
+  value: "{{ (index .Values "mariadb-ha").db.name }}"
 - name: MARIADB_HA_DB_HOST
   value: {{ .Release.Name }}-mariadb-ha-primary
 - name: MARIADB_HA_DB_PASS
@@ -154,14 +154,14 @@ rsync -az /values_mounts/ /backups/current/
 - name: DB_USER
   value: "root"
 - name: DB_NAME
-  value: "frontend"
+  value: "{{ (index .Values "mariadb-ha").db.name }}"
 - name: DB_HOST
   value: {{ .Release.Name }}-mariadb-ha-primary
 - name: DB_PASS
   valueFrom:
     secretKeyRef:
       name: {{ .Release.Name }}-mariadb-ha
-      key: password
+      key: root-password
 {{- end }}
 # MongoDB
 {{- if .Values.mongodb.enabled }}

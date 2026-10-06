@@ -518,8 +518,12 @@ mariadb-ha:
   enabled: false
   image: "docker-registry1.mariadb.com/library/mariadb:11.4"
   imagePullPolicy: IfNotPresent
-  password: frontend
-  rootPassword: frontend
+  rootUser:
+    password: frontend
+  db:
+    name: frontend
+    user: frontend
+    password: frontend
   # Odd number of replicas required, at least 3
   replicas: 3
   persistence:
