@@ -88,12 +88,3 @@ rabbitmq:
   enabled: true
   auth:
     password: "foo"
-
-# mariadb:
-#   enabled: false
-
-mariadb-ha:
-  enabled: true
-
-db:
-  primary: mariadb-ha
